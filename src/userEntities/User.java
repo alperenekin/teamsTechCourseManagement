@@ -11,13 +11,16 @@ public abstract class User {
 	public User() {
 		
 	}
-	public User(String userName,String email)
+	public User(String userName)
 	{
 		this.name = userName;
-		this.id = UserUtil.generateId();
-		this.email= email;
-		
-		
+		this.id = UserUtil.generateId();		
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 }

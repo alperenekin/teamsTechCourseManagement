@@ -1,8 +1,8 @@
 package userEntities;
 
 public class Instructor extends Academian {
-	public	Instructor(String userName,String email) {
-		super(userName,email);
+	public	Instructor(String userName) {
+		super(userName);
 	}
 	public void createTeam()
 	{
