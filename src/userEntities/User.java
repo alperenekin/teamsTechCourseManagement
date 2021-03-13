@@ -1,5 +1,7 @@
 package userEntities;
 
+import teamEntities.Team;
+
 public abstract class User {
 
 	private String name;
@@ -7,6 +9,7 @@ public abstract class User {
 	private String email;
 	private String passwd;
 	private String department;
+	private Team[] teams;
 	
 	public User() {
 		
@@ -22,5 +25,7 @@ public abstract class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+	public Team[] getTeams() {
+		return teams;
+	}
 }
