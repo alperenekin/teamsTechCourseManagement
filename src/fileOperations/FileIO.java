@@ -9,13 +9,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileIO {
-	private ArrayList<ArrayList<String>> lines;
-	
-	public FileIO() {
-		lines= new ArrayList<ArrayList<String>>();
-	}
 	
 	public ArrayList<ArrayList<String>> readCsv(String filename) { //filename = teamlist
+		 ArrayList<ArrayList<String>> lines = new ArrayList<ArrayList<String>>();
 		 File file =new File(filename+".csv");
 		 String[] values;
 		 try {

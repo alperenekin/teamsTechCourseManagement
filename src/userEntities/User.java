@@ -17,7 +17,8 @@ public abstract class User {
 	public User(String userName)
 	{
 		this.name = userName;
-		this.id = UserUtil.generateId();		
+		this.id = UserUtil.generateId();	
+		this.passwd = UserUtil.generatePassword();
 	}
 	public String getEmail() {
 		return email;
