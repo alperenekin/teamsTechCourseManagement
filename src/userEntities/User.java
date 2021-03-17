@@ -29,4 +29,7 @@ public abstract class User {
 	public Team[] getTeams() {
 		return teams;
 	}
+	public void setTeams(Team[] teams) {
+		this.teams = teams;
+	}
 }
