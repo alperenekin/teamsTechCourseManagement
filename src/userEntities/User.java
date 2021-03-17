@@ -1,9 +1,12 @@
 package userEntities;
 
+import mediator.IIdentifiable;
+import mediator.Mediator;
 import teamEntities.Team;
 
-public abstract class User {
-
+public abstract class User implements IIdentifiable{
+	
+	private Mediator mediator;
 	private String name;
 	private int id;
 	private String email;
@@ -27,5 +30,11 @@ public abstract class User {
 	}
 	public Team[] getTeams() {
 		return teams;
+	}
+	public int getId() {
+		return id;
+	}
+	public Mediator getMediator() {
+		return mediator;
 	}
 }

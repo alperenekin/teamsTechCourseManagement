@@ -1,17 +1,17 @@
 package userEntities;
 
+import teamEntities.Team;
+
 public class Instructor extends Academian {
 	public	Instructor(String userName) {
 		super(userName);
 	}
-	public void createTeam()
+	public void createTeam(String teamName)
 	{
-		
+		this.getMediator().addTeam(this,teamName);
 	}
-	public void addTeamOwner(String name)
+	public void addTeamOwner(Team team)
 	{
-		//teamobject also be added. 
-		
-		
+		this.getMediator().promoteUser(team);
 	}
 }
