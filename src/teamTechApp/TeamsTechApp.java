@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fileOperations.FileIO;
+import teamEntities.Channel;
+import teamEntities.Meeting;
+import teamEntities.Team;
 import userEntities.Instructor;
 import userEntities.Student;
 import userEntities.TeachingAsistant;
@@ -11,7 +14,7 @@ import userEntities.User;
 
 public class TeamsTechApp {
 	List<User> userList = new ArrayList<User>();
-	
+	List<Team> teamList = new ArrayList<Team>();
 	public void init() {
 		FileIO fileIO = new FileIO();
 		ArrayList<ArrayList<String>> userStrings = fileIO.readCsv("userList");
@@ -26,6 +29,18 @@ public class TeamsTechApp {
 			//BURADA USER YARATTIK ANCAK TEAMIDs LERI KULLANMADIK
 			User newUser = createUser(userType,userName);
 			userList.add(newUser);
+		}
+		
+		for(int i=1; i< teamStrings.size() ; i++) {
+			String teamName = teamStrings.get(i).get(0);
+			String teamId = teamStrings.get(i).get(1);
+			String defaultChannelName = teamStrings.get(i).get(2);
+			String meetingTime = teamStrings.get(i).get(3);
+			
+			Meeting meeting = new Meeting(meetingTime);
+			Channel channel = new Channel(defaultChannelName,meeting);
+			Team team = new Team(teamName,teamId,channel);
+			teamList.add(team);
 		}
 	}
 	
