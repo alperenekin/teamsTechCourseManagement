@@ -22,4 +22,22 @@ class UserUtil {
 		return false;
 	}
 	
+	public static String generatePassword() {
+		final String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
+	    final String CHAR_UPPER = CHAR_LOWER.toUpperCase();
+	    final String NUMBER = "0123456789";
+
+	    final String DATA_FOR_RANDOM_STRING = CHAR_LOWER + CHAR_UPPER + NUMBER;
+
+	    StringBuilder sb = new StringBuilder(4);
+        for (int i = 0; i < 4; i++) {
+			Random rand = new Random();		
+            int rndCharAt = rand.nextInt(DATA_FOR_RANDOM_STRING.length());
+            char rndChar = DATA_FOR_RANDOM_STRING.charAt(rndCharAt);
+            sb.append(rndChar);
+        }
+        //System.out.println(sb); //delete later
+        return sb.toString();	
+  }
+	
 }
