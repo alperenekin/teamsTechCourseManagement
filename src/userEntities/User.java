@@ -1,10 +1,13 @@
 package userEntities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mediator.IIdentifiable;
 import mediator.Mediator;
 import teamEntities.Team;
 
-public abstract class User implements IIdentifiable{
+public abstract class User{
 	
 	private Mediator mediator;
 	private String name;
@@ -12,13 +15,14 @@ public abstract class User implements IIdentifiable{
 	private String email;
 	private String passwd;
 	private String department;
-	private Team[] teams;
+	private List<Team> teams;
 	
 	public User() {
 		
 	}
 	public User(String userName)
 	{
+		teams = new ArrayList<Team>();
 		this.name = userName;
 		this.id = UserUtil.generateId();		
 	}
@@ -28,13 +32,17 @@ public abstract class User implements IIdentifiable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Team[] getTeams() {
-		return teams;
-	}
+
 	public int getId() {
 		return id;
 	}
 	public Mediator getMediator() {
 		return mediator;
+	}
+	public List<Team> getTeams() {
+		return teams;
+	}
+	public void addTeam(Team team) {
+		this.teams.add(team);
 	}
 }

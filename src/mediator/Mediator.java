@@ -1,26 +1,81 @@
 package mediator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import teamEntities.Team;
+import userEntities.Instructor;
+import userEntities.Student;
+import userEntities.TeachingAsistant;
 import userEntities.User;
 
 public class Mediator implements IMediator {
-	private Team[] teamList;
-	private User[] userList;
+	private List<Team> teamList;
+	private List<User> userList;
 
 	public Mediator()
 	{
-		
+		teamList = new ArrayList<Team>();
+		userList = new ArrayList<User>();
 	}
-	public boolean addTeam(User author,String teamName)
+	public boolean addTeam(User author,String teamName, Team team)
 	{
 		if(true) //author.getClass() == "Instructor"   this not how you check. fix it 
 		{
-			int id = MediatorUtil.generateId(teamList);
+			teamList.add(team);
 			return true;
 		}
 		else
 			//throw new UnauthorizedUserOperationException(); exception handling
 			return false;
+	}
+	
+	public boolean addUser(String userType, String username, List<String> teamIDs){
+		if(true) //author.getClass() == "Instructor"   this not how you check. fix it 
+		{
+			if(userType.toUpperCase().equals("INSTRUCTOR")) { //instructor vs enum yapýlabilri
+				Instructor instructor = new Instructor(username);
+				if(teamIDs != null) {
+					for(String teamName : teamIDs) {
+						Team team = findTeamOfUser(teamName);
+						instructor.addTeam(team);
+					}
+				}
+				userList.add(instructor);
+
+			}
+			else if(userType.toUpperCase().equals("TEACHÝNG ASSÝSTANT")) { // türkçe karakter olarak upper case yaptý?
+				TeachingAsistant teachingAsistant = new TeachingAsistant(username);
+				if(teamIDs != null) {
+					for(String teamName : teamIDs) {
+						Team team = findTeamOfUser(teamName);
+						teachingAsistant.addTeam(team);
+					}
+				}
+				userList.add(teachingAsistant);
+			}
+			else{
+				Student student = new Student(username);
+				if(teamIDs != null) {
+					for(String teamName : teamIDs) {
+						Team team = findTeamOfUser(teamName);
+						student.addTeam(team);
+					}
+				}
+				userList.add(student);
+
+			}
+		}
+		return true;
+	}
+	
+	private Team findTeamOfUser(String teamID) {
+		for(Team team : teamList) {
+			if(teamID.equals(team.getId())){
+				return team;
+			}		
+		}
+		return null;
 	}
 	@Override
 	public boolean findTeam() {
@@ -34,7 +89,8 @@ public class Mediator implements IMediator {
 	}
 	@Override
 	public boolean addMeetingChannel(Team team,String publicity,String name) {
-		return team.addChannel(publicity,name);
+		return false;
+		//return team.addChannel(publicity,name);
 	}
 	@Override
 	public boolean removeMeetingChannel() {
@@ -97,5 +153,10 @@ public class Mediator implements IMediator {
 		 * ask them whitch one is gonna be teamowner
 		 * take the choosen one , update its owned teams, update team
 		 */
+	}
+	@Override
+	public boolean addTeam(User author, String teamName) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

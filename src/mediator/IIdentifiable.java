@@ -1,5 +1,5 @@
 package mediator;
 
 public interface IIdentifiable {
-	public int getId();
+	public String getId();
 }

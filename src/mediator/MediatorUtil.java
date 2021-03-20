@@ -1,7 +1,7 @@
 package mediator;
 import java.util.Random;
 public class MediatorUtil {
-	public static int generateId(IIdentifiable[] list) {
+	/*	public static int generateId(IIdentifiable[] list) {
 		//not unique
 		boolean notUnique = false;
 		int id = -1;
@@ -21,6 +21,5 @@ public class MediatorUtil {
 		}
 		return true;
 	}
-		
+	*/	
 }
-

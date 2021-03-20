@@ -16,7 +16,7 @@ public class TeamsTechApp {
 	List<User> userList = new ArrayList<User>();
 	List<Team> teamList = new ArrayList<Team>();
 	public void init() {
-		FileIO fileIO = new FileIO();
+		/*FileIO fileIO = new FileIO();
 		ArrayList<ArrayList<String>> userStrings = fileIO.readCsv("userList");
 		ArrayList<ArrayList<String>> teamStrings = fileIO.readCsv("teamList");
 		for(int i=1; i<userStrings.size() ; i++) {
@@ -58,5 +58,5 @@ public class TeamsTechApp {
 			//System.out.print(student.getEmail());
 			return student;
 		}
-	}
+	*/}
 }
