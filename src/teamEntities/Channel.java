@@ -12,11 +12,11 @@ public class Channel implements IUpdateable{
 
 	
 	public Channel() {
-		this.name = "General";
+		this.setName("General");
 		this.publicity = "Public";
 	}
 	public Channel(String name,String publicity, Meeting meeting) {//publicity falan eklenmeli
-		this.name = name;
+		this.setName(name);
 		this.meeting = meeting;
 		this.publicity = publicity;
 	}
@@ -24,6 +24,12 @@ public class Channel implements IUpdateable{
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

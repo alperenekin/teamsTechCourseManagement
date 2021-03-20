@@ -15,7 +15,9 @@ public class Team {
 	private ArrayList<Channel> channels;
 	
 	public Team (String teamName, String teamId, ArrayList<Channel> channels) {
-		
+		this.teamName = teamName;
+		this.teamId = teamId;
+		this.channels = channels;
 	}
 	public String getId() {
 		return teamId;
