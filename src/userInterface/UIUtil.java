@@ -36,13 +36,14 @@ public class UIUtil {
 
 	public static void performCurrentUserTasks(Mediator mediator,User currentUser) {
 		System.out.println("What would you like to do? 	\n");
-		printAuthorizedTasks();
+		printAuthorizedTasks(mediator,currentUser);
 		
 		
 	}
 
-	private static void printAuthorizedTasks() {
-		// TODO Auto-generated method stub
+	private static void printAuthorizedTasks(Mediator mediator,User currentUser) {
+		
+		
 		
 	}
 
