@@ -125,9 +125,10 @@ public class Mediator implements IMediator {
 		return false;
 	}
 	@Override
-	public boolean updateMeetingChannelTime() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean updateMeetingChannelTime(String meetingTime,int channelPlace, int teamPlace) {
+		teamList.get(teamPlace).getChannels().get(channelPlace).getMeeting().setMeetingTime(meetingTime);
+		
+		return true;
 	}
 	@Override
 	public boolean updateMeetingChannelParticipants() {
@@ -145,19 +146,40 @@ public class Mediator implements IMediator {
 		return false;
 	}
 	@Override
-	public boolean numberOfStudents() {
-		// TODO Auto-generated method stub
-		return false;
+	public int numberOfStudents() {
+		int totalStudents = 0;
+		for(int i = 0 ; i < userList.size();i++)
+		{			
+			if(userList.get(i) instanceof Student)
+			{
+				totalStudents++;
+			}
+		}
+		return totalStudents;
 	}
 	@Override
-	public boolean numberOfInstructors() {
-		// TODO Auto-generated method stub
-		return false;
+	public int numberOfInstructors() {
+		int totalInstructors = 0;
+		for(int i = 0 ; i < userList.size();i++)
+		{			
+			if(userList.get(i) instanceof Instructor)
+			{
+				totalInstructors++;
+			}
+		}
+		return totalInstructors;
 	}
 	@Override
-	public boolean numberOfTeachingAssistants() {
-		// TODO Auto-generated method stub
-		return false;
+	public int numberOfTeachingAssistants() {
+		int totalTeachingAssistants = 0;
+		for(int i = 0 ; i < userList.size();i++)
+		{			
+			if(userList.get(i) instanceof TeachingAsistant)
+			{
+				totalTeachingAssistants++;
+			}
+		}
+		return totalTeachingAssistants;
 	}
 	@Override
 	public boolean showMeetingChanels() {

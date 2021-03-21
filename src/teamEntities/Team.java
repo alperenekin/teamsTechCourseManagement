@@ -52,5 +52,8 @@ public class Team {
 
 		
 	}
+	public ArrayList<Channel> getChannels(){
+		return channels;
+	}
 	
 }
