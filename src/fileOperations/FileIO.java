@@ -34,15 +34,21 @@ public class FileIO {
 		return lines;
 	}
 	
-	public void replaceLines(String oldLineItem,String newLine,String filename) {
+	public void replaceLines(String oldLineItem, String oldLineItem2,String newLine,String filename) {
 	    try {
 	        BufferedReader file = new BufferedReader(new FileReader(filename+".csv"));
 	        StringBuffer inputBuffer = new StringBuffer();
 	        String line;
-
 	        while ((line = file.readLine()) != null) {
-	        	if(line.contains(oldLineItem)) {
-	        		line = newLine;
+	        	if(oldLineItem2 != null) { // to prevent duplicate names..
+	        		if(line.contains(oldLineItem) && line.contains(oldLineItem2)) {
+		        		line = newLine;
+		        	}	
+	        	}
+	        	else{
+	        		if(line.contains(oldLineItem)) {
+		        		line = newLine;
+		        	}
 	        	}
 	            inputBuffer.append(line);
 	            inputBuffer.append('\n');

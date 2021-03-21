@@ -20,11 +20,12 @@ public abstract class User{
 	public User() {
 		
 	}
-	public User(String userName, int userId)
+	public User(String userName, int userId,String password)
 	{
 		teams = new ArrayList<Team>();
-		this.name = userName;
+		this.setName(userName);
 		this.id = userId;
+		this.setPasswd(password);
 	}
 	public String getEmail() {
 		return email;
@@ -45,9 +46,19 @@ public abstract class User{
 	public void addTeam(Team team) {
 		this.teams.add(team);
 	}
+	
+	abstract public String toString();
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getPasswd() {
 		return passwd;
 	}
-
-	
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
 }
