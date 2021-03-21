@@ -10,8 +10,8 @@ import userEntities.TeachingAsistant;
 import userEntities.User;
 
 public class Mediator implements IMediator {
-	private List<Team> teamList;
-	private List<User> userList;
+	private ArrayList<Team> teamList;
+	private ArrayList<User> userList;
 
 	public Mediator()
 	{
@@ -30,11 +30,18 @@ public class Mediator implements IMediator {
 			return false;
 	}
 	
-	public boolean addUser(String userType, String username, List<String> teamIDs){
+	public boolean addUser(String userType, String username, List<String> teamIDs,String userId){
 		if(true) //author.getClass() == "Instructor"   this not how you check. fix it 
 		{
+			int id;
+			if(userId.isEmpty()) {
+				id = MediatorUtil.generateId(userList);
+			}else {
+				id = Integer.parseInt(userId);
+			}
 			if(userType.toUpperCase().equals("INSTRUCTOR")) { //instructor vs enum yapýlabilri
-				Instructor instructor = new Instructor(username);
+				
+				Instructor instructor = new Instructor(username,id);
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
 						Team team = findTeamOfUser(teamName);
@@ -45,7 +52,7 @@ public class Mediator implements IMediator {
 
 			}
 			else if(userType.toUpperCase().equals("TEACHÝNG ASSÝSTANT")) { // türkçe karakter olarak upper case yaptý?
-				TeachingAsistant teachingAsistant = new TeachingAsistant(username);
+				TeachingAsistant teachingAsistant = new TeachingAsistant(username,id);
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
 						Team team = findTeamOfUser(teamName);
@@ -55,7 +62,7 @@ public class Mediator implements IMediator {
 				userList.add(teachingAsistant);
 			}
 			else{
-				Student student = new Student(username);
+				Student student = new Student(username,id);
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
 						Team team = findTeamOfUser(teamName);

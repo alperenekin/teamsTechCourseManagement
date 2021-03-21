@@ -3,8 +3,8 @@ package userEntities;
 import teamEntities.Team;
 
 public class Instructor extends Academian {
-	public	Instructor(String userName) {
-		super(userName);
+	public	Instructor(String userName, int userId) {
+		super(userName,userId);
 	}
 	public void createTeam(String teamName)
 	{

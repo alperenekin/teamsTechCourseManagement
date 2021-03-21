@@ -59,15 +59,20 @@ public class teamTechApp {
 		for(int i=1; i<userStrings.size() ; i++) {
 			String userType = userStrings.get(i).get(0);
 			String userName = userStrings.get(i).get(1);
+			String userId;
+			if(userStrings.get(i).size() == 2) {
+				userId = "";	
+			}else {
+				userId = userStrings.get(i).get(2);
+			}
+
 			List<String> teamIDs;
 			if(userStrings.get(i).size() > 5) { // it means this student has a team/teams
 				teamIDs = userStrings.get(i).subList(5, userStrings.get(i).size());
-				mediator.addUser(userType, userName,teamIDs);
+				mediator.addUser(userType, userName,teamIDs,userId);
 			}else {
-				mediator.addUser(userType, userName,null);
+				mediator.addUser(userType, userName,null,userId);
 			}
 		}
-		
-		
 	}
 }

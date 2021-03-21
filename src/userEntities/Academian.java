@@ -6,9 +6,9 @@ public abstract class Academian extends User {
 	final String domain = "iyte.edu.tr";
 
 	//private Team ownedTeams;
-	public Academian(String userName)
+	public Academian(String userName, int userId)
 	{
-		super(userName);
+		super(userName,userId);
 		String[] nameSurname = userName.split(" ");
 		String name = nameSurname[0].toLowerCase();
 		String surname = nameSurname[1].toLowerCase();

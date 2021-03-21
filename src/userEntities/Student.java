@@ -2,9 +2,9 @@ package userEntities;
 
 public class Student extends User {
 	final String domain = "std.iyte.edu.tr";
-	public Student(String userName)
+	public Student(String userName, int userId)
 	{
-		super(userName);
+		super(userName,userId);
 		String[] nameSurname = userName.split(" "); //student usernamelerin baþýnda boþluk var, array length 3 geliyor.
 		String name;
 		String secondName;

@@ -20,11 +20,11 @@ public abstract class User{
 	public User() {
 		
 	}
-	public User(String userName)
+	public User(String userName, int userId)
 	{
 		teams = new ArrayList<Team>();
 		this.name = userName;
-		this.id = UserUtil.generateId();		
+		this.id = userId;
 	}
 	public String getEmail() {
 		return email;
