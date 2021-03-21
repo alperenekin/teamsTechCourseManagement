@@ -33,7 +33,12 @@ public class teamTechApp {
 		FileIO fileIO = new FileIO();
 		ArrayList<ArrayList<String>> userStrings = fileIO.readCsv("userList");
 		ArrayList<ArrayList<String>> teamStrings = fileIO.readCsv("teamList");
-
+		createTeamsFromFile(mediator,teamStrings);
+		createUsersFromFile(mediator,userStrings);
+		mediator.addTeamOwner();
+	}
+	
+	private static void createTeamsFromFile(Mediator mediator, ArrayList<ArrayList<String>> teamStrings) {
 		for(int i=1; i< teamStrings.size() ; i++) {
 			ArrayList<Channel> channelsOfATeam = new ArrayList<Channel>();
 			String teamName = teamStrings.get(i).get(0); //þuralar optimize edilebilir.
@@ -45,7 +50,6 @@ public class teamTechApp {
 				String newMeetingTime = teamStrings.get(i).get(5);
 				ArrayList<String> participants = new ArrayList<String>();//= new ArrayList<>(Arrays.asList(teamStrings.get(i).get(6).split(",")));
 				createParticipantsForChannel(participants, teamStrings,i);
-				System.out.println(participants.get(1));
 				if(newMeetingTime.isEmpty()) {
 					PrivateChannel privateChannel = new PrivateChannel(privateChannelName,null,participants);
 					channelsOfATeam.add(privateChannel);
@@ -54,7 +58,6 @@ public class teamTechApp {
 					PrivateChannel privateChannel = new PrivateChannel(privateChannelName,newMeeting,participants);
 					channelsOfATeam.add(privateChannel);
 				}
-
 			}
 			Meeting meeting = new Meeting(meetingTime);
 			DefaultChannel defaultChannel = new DefaultChannel(defaultChannelName,meeting);
@@ -63,7 +66,9 @@ public class teamTechApp {
 			Team team = new Team(teamName,teamId,channelsOfATeam);
 			mediator.addTeam(team);
 		}
-		
+	}
+	
+	private static void createUsersFromFile(Mediator mediator, ArrayList<ArrayList<String>> userStrings) {
 		for(int i=1; i<userStrings.size() ; i++) {
 			String userType = userStrings.get(i).get(0);
 			String userName = userStrings.get(i).get(1);
@@ -90,7 +95,7 @@ public class teamTechApp {
 	private static void createParticipantsForChannel(ArrayList<String> participants, ArrayList<ArrayList<String>> line ,int i) {
 		for(int j = 0; j<line.get(i).size(); j++) {
 			if((6+j) <line.get(i).size()) {
-				int len = line.get(i).get(6+j).length();
+				int len = line.get(i).get(6+j).length(); // TODO 6 lar deðiþmeli
 				if(line.get(i).get(6+j).startsWith("\"")){
 					participants.add(line.get(i).get(6+j).substring(1,len));
 				}
@@ -104,4 +109,5 @@ public class teamTechApp {
 			}
 		}
 	}
+	
 }

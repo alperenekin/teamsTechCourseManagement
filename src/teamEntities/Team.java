@@ -10,7 +10,7 @@ public class Team {
 	private Mediator mediator;
 	private String teamName;
 	private String teamId;
-	private ArrayList<User> owner;
+	private ArrayList<User> owners;
 	private ArrayList<String> participitans; //hoca Participantlari id olarak tutmus, sanrm id olarak tutmamiz daha makul olur ve unique olmak zorunda.
 	private ArrayList<Channel> channels;
 	
@@ -18,6 +18,7 @@ public class Team {
 		this.teamName = teamName;
 		this.teamId = teamId;
 		this.channels = channels;
+		this.owners = new ArrayList<User>();
 	}
 	public String getId() {
 		return teamId;
@@ -26,8 +27,12 @@ public class Team {
 	{
 		channels.add(channel);
 		return false;
-		
 	}
 	
+	public boolean addOwner(User teamOwner)
+	{
+		owners.add(teamOwner);
+		return false;
+	}
 	
 }

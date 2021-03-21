@@ -181,6 +181,21 @@ public class Mediator implements IMediator {
 		 * take the choosen one , update its owned teams, update team
 		 */
 	}
+	
+	public void addTeamOwner() { // this is for first time adding of team owners, only instructors can be team owners.
+		for(User user: userList) {
+			if(user instanceof Instructor) {
+				for(Team team : teamList) {
+					for(Team userTeam : user.getTeams()) {
+						if(userTeam.getId().equals(team.getId())) {
+							team.addOwner(user);
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	@Override
 	public boolean addTeam(User author, String teamName) {
 		// TODO Auto-generated method stub
