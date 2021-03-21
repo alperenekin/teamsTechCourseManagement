@@ -14,19 +14,24 @@ public class UIUtil {
 
 	private static User login(Mediator mediator) {
 		Scanner scanner= new Scanner(System.in);    //System.in is a standard input stream  
-		System.out.print("Username:  ");  
+		System.out.print("Username(email):  ");  
 		String userName = scanner.nextLine();  
-		System.out.print("Passwd:  ");  
-		int passwd= scanner.nextInt();
-		//findUser();
+		System.out.print("Passwd:  ");
+		String passwd = scanner.nextLine();
+		
+		User returnUser = mediator.findUser(userName,passwd);
+		if(returnUser.equals(null))
+		{
+			System.out.println("Incorrect user name or password. Try Again.");
+			returnUser = login(mediator);
+		}
 		//if not found call login. 
-		return null;
+		return returnUser;
 		
 	}
 
 	private static void printLoginScreen() {
 		System.out.println("Welcome to the teamsTechApp\n");
-		System.out.println("(First time users password is always '1234') \n");
 	}
 
 	public static void performCurrentUserTasks(Mediator mediator,User currentUser) {

@@ -166,4 +166,14 @@ public class Mediator implements IMediator {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	public User findUser(String userName,String passwd) {
+		
+		for(int i = 0 ; i < userList.size(); i++)
+		{
+			
+			if(userList.get(i).getEmail().contentEquals(userName) && userList.get(i).);
+		}
+		return null;
+		
+	}
 }

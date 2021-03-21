@@ -12,7 +12,7 @@ public abstract class User{
 	private Mediator mediator;
 	private String name;
 	private int id;
-	private String email;
+	private String email; //also used as login username
 	private String passwd;
 	private String department;
 	private List<Team> teams;
@@ -45,4 +45,9 @@ public abstract class User{
 	public void addTeam(Team team) {
 		this.teams.add(team);
 	}
+	public String getPasswd() {
+		return passwd;
+	}
+
+	
 }
