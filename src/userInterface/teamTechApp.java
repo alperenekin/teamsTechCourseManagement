@@ -45,7 +45,7 @@ public class teamTechApp {
 				String newMeetingTime = teamStrings.get(i).get(5);
 				ArrayList<String> participants = new ArrayList<String>();//= new ArrayList<>(Arrays.asList(teamStrings.get(i).get(6).split(",")));
 				createParticipantsForChannel(participants, teamStrings,i);
-				
+				System.out.println(participants.get(1));
 				if(newMeetingTime.isEmpty()) {
 					PrivateChannel privateChannel = new PrivateChannel(privateChannelName,null,participants);
 					channelsOfATeam.add(privateChannel);
@@ -92,11 +92,11 @@ public class teamTechApp {
 			if((6+j) <line.get(i).size()) {
 				int len = line.get(i).get(6+j).length();
 				if(line.get(i).get(6+j).startsWith("\"")){
-					participants.add(line.get(i).get(6+j).substring(2,len));
+					participants.add(line.get(i).get(6+j).substring(1,len));
 				}
 				else {
 					if(line.get(i).get(6+j).endsWith("\"")) {
-						participants.add(line.get(i).get(6+j).substring(1,len-3));
+						participants.add(line.get(i).get(6+j).substring(1,len-1));
 					}else {
 						participants.add(line.get(i).get(6+j).substring(1,len));
 					}
