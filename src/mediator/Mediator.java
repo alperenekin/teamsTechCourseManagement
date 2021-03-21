@@ -19,7 +19,7 @@ public class Mediator implements IMediator {
 		teamList = new ArrayList<Team>();
 		userList = new ArrayList<User>();
 	}
-	public boolean addTeam(User author,String teamName, Team team)
+	public boolean addTeam(Team team) // team in componentlerý(channel meeting gibi þeyler parametrede alýnýp burada da oluþturulabilir
 	{
 		if(true) //author.getClass() == "Instructor"   this not how you check. fix it 
 		{

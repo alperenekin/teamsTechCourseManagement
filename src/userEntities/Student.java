@@ -35,9 +35,9 @@ public class Student extends User {
 				teams += t.getId()+",";
 			}
 			teams = teams.substring(0,teams.length()-1);
-			return type + ", " + username + "," + userid +"," + email + "," + password +"," + teams;
+			return type + "," + username + "," + userid +"," + email + "," + password +"," + teams;
 		}
-		return type + ", " + username + "," + userid +"," + email + "," + password;
+		return type + "," + username + "," + userid +"," + email + "," + password;
 
 	}
 }

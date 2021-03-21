@@ -7,7 +7,9 @@ import java.util.List;
 import fileOperations.FileIO;
 import mediator.Mediator;
 import teamEntities.Channel;
+import teamEntities.DefaultChannel;
 import teamEntities.Meeting;
+import teamEntities.PrivateChannel;
 import teamEntities.Team;
 import userEntities.Instructor;
 import userEntities.User;
@@ -34,31 +36,32 @@ public class teamTechApp {
 
 		for(int i=1; i< teamStrings.size() ; i++) {
 			ArrayList<Channel> channelsOfATeam = new ArrayList<Channel>();
-			String teamName = teamStrings.get(i).get(0);
+			String teamName = teamStrings.get(i).get(0); //þuralar optimize edilebilir.
 			String teamId = teamStrings.get(i).get(1);
 			String defaultChannelName = teamStrings.get(i).get(2);
 			String meetingTime = teamStrings.get(i).get(3);
 			if(teamStrings.get(i).size() > 4) {
-				String newChannelName = teamStrings.get(i).get(4);
+				String privateChannelName = teamStrings.get(i).get(4);
 				String newMeetingTime = teamStrings.get(i).get(5);
-				List<String> participants = Arrays.asList(teamStrings.get(i).get(6).split(","));
+				ArrayList<String> participants = new ArrayList<String>();//= new ArrayList<>(Arrays.asList(teamStrings.get(i).get(6).split(",")));
+				createParticipantsForChannel(participants, teamStrings,i);
 				
 				if(newMeetingTime.isEmpty()) {
-					Channel newChannel = new Channel(newChannelName,"private",null);
-					channelsOfATeam.add(newChannel);
+					PrivateChannel privateChannel = new PrivateChannel(privateChannelName,null,participants);
+					channelsOfATeam.add(privateChannel);
 				}else {
 					Meeting newMeeting = new Meeting(newMeetingTime);
-					Channel newChannel = new Channel(newChannelName,"private",newMeeting);
-					channelsOfATeam.add(newChannel);
+					PrivateChannel privateChannel = new PrivateChannel(privateChannelName,newMeeting,participants);
+					channelsOfATeam.add(privateChannel);
 				}
 
 			}
 			Meeting meeting = new Meeting(meetingTime);
-			Channel channel = new Channel(defaultChannelName,"public",meeting);
-			channelsOfATeam.add(channel);
+			DefaultChannel defaultChannel = new DefaultChannel(defaultChannelName,meeting);
+			channelsOfATeam.add(defaultChannel);
 			
 			Team team = new Team(teamName,teamId,channelsOfATeam);
-			mediator.addTeam(null, null, team);
+			mediator.addTeam(team);
 		}
 		
 		for(int i=1; i<userStrings.size() ; i++) {
@@ -80,6 +83,24 @@ public class teamTechApp {
 				mediator.addUser(userType, userName,teamIDs,userId,password);
 			}else {
 				mediator.addUser(userType, userName,null,userId,password);
+			}
+		}
+	}
+	
+	private static void createParticipantsForChannel(ArrayList<String> participants, ArrayList<ArrayList<String>> line ,int i) {
+		for(int j = 0; j<line.get(i).size(); j++) {
+			if((6+j) <line.get(i).size()) {
+				int len = line.get(i).get(6+j).length();
+				if(line.get(i).get(6+j).startsWith("\"")){
+					participants.add(line.get(i).get(6+j).substring(2,len));
+				}
+				else {
+					if(line.get(i).get(6+j).endsWith("\"")) {
+						participants.add(line.get(i).get(6+j).substring(1,len-3));
+					}else {
+						participants.add(line.get(i).get(6+j).substring(1,len));
+					}
+				}
 			}
 		}
 	}
