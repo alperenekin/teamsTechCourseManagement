@@ -11,7 +11,7 @@ public abstract class Channel implements IUpdateable{
 
 	public Channel(String name, Meeting meeting) {
 		this.setName(name);
-		this.meeting = meeting;
+		this.setMeeting(meeting);
 	}
 	
 	@Override
@@ -27,6 +27,14 @@ public abstract class Channel implements IUpdateable{
 	}
 	
 	abstract boolean isAuserParticipant(String userId);
+
+	public Meeting getMeeting() {
+		return meeting;
+	}
+
+	public void setMeeting(Meeting meeting) {
+		this.meeting = meeting;
+	}
 	
 	
 }

@@ -35,4 +35,22 @@ public class Team {
 		return false;
 	}
 	
+	public String toString() {		
+		String defaultChannel = channels.get(channels.size()-1).getName();
+		String defaultMeeting = channels.get(channels.size()-1).getMeeting().getMeetingTime();
+		String privateChannels = "";
+		for(Channel channel : channels) {
+			if(channel instanceof PrivateChannel) {
+				privateChannels += channel.toString() + ",";
+			}
+		}
+		if(privateChannels.length()>1) {
+			privateChannels = privateChannels.substring(0,privateChannels.length()-1);
+			return this.teamName + "," + this.teamId + "," + defaultChannel + "," + defaultMeeting + "," + privateChannels;
+		}
+		return this.teamName + "," + this.teamId + "," + defaultChannel + "," + defaultMeeting;
+
+		
+	}
+	
 }

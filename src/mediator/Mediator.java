@@ -186,6 +186,7 @@ public class Mediator implements IMediator {
 		for(User user: userList) {
 			if(user instanceof Instructor) {
 				for(Team team : teamList) {
+					System.out.println(team.toString());
 					for(Team userTeam : user.getTeams()) {
 						if(userTeam.getId().equals(team.getId())) {
 							team.addOwner(user);

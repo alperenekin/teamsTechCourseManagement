@@ -45,29 +45,39 @@ public class teamTechApp {
 			String teamId = teamStrings.get(i).get(1);
 			String defaultChannelName = teamStrings.get(i).get(2);
 			String meetingTime = teamStrings.get(i).get(3);
-			if(teamStrings.get(i).size() > 4) {
-				String privateChannelName = teamStrings.get(i).get(4);
-				String newMeetingTime = teamStrings.get(i).get(5);
-				ArrayList<String> participants = new ArrayList<String>();//= new ArrayList<>(Arrays.asList(teamStrings.get(i).get(6).split(",")));
-				createParticipantsForChannel(participants, teamStrings,i);
-				if(newMeetingTime.isEmpty()) {
-					PrivateChannel privateChannel = new PrivateChannel(privateChannelName,null,participants);
-					channelsOfATeam.add(privateChannel);
-				}else {
-					Meeting newMeeting = new Meeting(newMeetingTime);
-					PrivateChannel privateChannel = new PrivateChannel(privateChannelName,newMeeting,participants);
-					channelsOfATeam.add(privateChannel);
-				}
-			}
+			
+			createPrivateChannelsFromFile(teamStrings,i,channelsOfATeam);
 			Meeting meeting = new Meeting(meetingTime);
 			DefaultChannel defaultChannel = new DefaultChannel(defaultChannelName,meeting);
 			channelsOfATeam.add(defaultChannel);
-			
 			Team team = new Team(teamName,teamId,channelsOfATeam);
 			mediator.addTeam(team);
 		}
 	}
 	
+	private static void createPrivateChannelsFromFile(ArrayList<ArrayList<String>> teamStrings, int i, ArrayList<Channel> channelsOfATeam) {
+		if(teamStrings.get(i).size() > 4) {
+			String privateChannelName = teamStrings.get(i).get(4);
+			String newMeetingTime = teamStrings.get(i).get(5);
+			ArrayList<String> participants = new ArrayList<String>();
+			createParticipantsForChannel(participants, teamStrings,i);
+			if(newMeetingTime.isEmpty()) {
+				PrivateChannel privateChannel = new PrivateChannel(privateChannelName,null);
+				for(String p : participants) {
+					privateChannel.addParticipant(p);
+				}
+				channelsOfATeam.add(privateChannel);
+			}else {
+				Meeting newMeeting = new Meeting(newMeetingTime);
+				PrivateChannel privateChannel = new PrivateChannel(privateChannelName,newMeeting);
+				for(String p : participants) {
+					privateChannel.addParticipant(p);
+				}
+				channelsOfATeam.add(privateChannel);
+				
+			}
+		}
+	}
 	private static void createUsersFromFile(Mediator mediator, ArrayList<ArrayList<String>> userStrings) {
 		for(int i=1; i<userStrings.size() ; i++) {
 			String userType = userStrings.get(i).get(0);

@@ -10,6 +10,12 @@ public class Meeting {
 	}
 	public Meeting(String meetingTime) //meetinglerin adı yok gibi, default olma gibi birşey tutulabilir.
 	{
+		this.setMeetingTime(meetingTime);
+	}
+	public String getMeetingTime() {
+		return meetingTime;
+	}
+	public void setMeetingTime(String meetingTime) {
 		this.meetingTime = meetingTime;
 	}
 }
