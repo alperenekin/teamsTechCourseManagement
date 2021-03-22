@@ -175,35 +175,35 @@ public class Mediator implements IMediator {
 		file.replaceLines(team.getId(), null, team.toString(), "teamList"); //add new info to file
 		return true;
 	}
+
 	@Override
-	public boolean updateMeetingChannelTime(String meetingTime,int channelPlace, int teamPlace) {
-		teamList.get(teamPlace).getChannels().get(channelPlace).getMeeting().setMeetingTime(meetingTime);
-		
+	public boolean updateMeetingChannelTime(String meetingTime, Channel channel, Team team) {
+		channel.getMeeting().update(meetingTime);
+		file.replaceLines(team.getId(), null, team.toString(), "teamList"); //add new info to file
 		return true;
-	}
-	@Override
-	public boolean updateMeetingChannelParticipants() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 	public boolean addParticipantToChannel(String  userId, PrivateChannel channel, Team team) {
 		User user = findUserFromId(userId);
-		if(user.getTeams().contains(team)) {
-			channel.addParticipant(userId);
-			file.replaceLines(team.getId(),  null, team.toString(), "teamList"); //add new info to file
-			return true;
-		}else {
-			System.out.println("This user does not belong to team");
+		if(user != null){
+			if(user.getTeams().contains(team)) {
+				channel.addParticipant(userId);
+				file.replaceLines(team.getId(),  null, team.toString(), "teamList"); //add new info to file
+				return true;
+			}else {
+				System.out.println("This user does not belong to team");
+				return false;
+			}
+		}else{
+			System.out.println("User not exist");
 			return false;
 		}
-		
 	}
 	public boolean removeParticipantFromChannel(String  userId, PrivateChannel channel, Team team)
 	{
-		channel.removeParticipant(userId);
+		boolean result = channel.removeParticipant(userId);
 		file.replaceLines(team.getId(),  null, team.toString(), "teamList");
-		return false;
+		return result;
 		
 	}
 	@Override

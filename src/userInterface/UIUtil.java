@@ -62,7 +62,7 @@ public class UIUtil {
 				}
 				System.out.print("Choose the team by entering number:");
 				int index = Integer.parseInt(scanner.nextLine())-1;
-				Team team = currentUser.getTeams().get(index);
+					Team team = currentUser.getTeams().get(index);
 				String teamName = team.getTeamName();
 				String teamId = team.getId();
 				ArrayList<Channel> channels = team.getChannels();
@@ -83,14 +83,13 @@ public class UIUtil {
 						}
 					}
 				}
-				showUserPrivateChannel(userPrivateChannels,currentUser,count,mediator);
+				showUserPrivateChannel(userPrivateChannels,count,mediator);
 				System.out.println("Choose an operation by entering a number");
 				System.out.println("1-Create Private Channel");
-				System.out.println("2-Update Private Channel");
+				System.out.println("2-Update meeting day and time of private channel");
 				System.out.println("3-Remove Private Channel");
 				System.out.println("4-Add Participant to Private Channel");
 				System.out.println("5-Remove a participant from Private Channel");
-				System.out.println("6-Update meeting day and time of private channel");
 				String choice2 = scanner.nextLine();
 				switch(choice2) {
 					case "1":
@@ -100,8 +99,18 @@ public class UIUtil {
 						String newMeetingTime = scanner.nextLine();
 						mediator.addMeetingChannel(team, newChannelName, newMeetingTime,true, String.valueOf(currentUser.getId()));
 						break;
+					case "2":
+						showUserPrivateChannel(userPrivateChannels,count,mediator);
+						if(!userPrivateChannels.isEmpty()) {
+							System.out.println("Choose channel you want to update meeting time");
+							int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
+							System.out.println("Enter new meeting time (Monday 9.45 am)");
+							String meetTime = scanner.nextLine();
+							mediator.updateMeetingChannelTime(meetTime,userPrivateChannels.get(channelNumber),team);
+						}
+						break;
 					case "3":
-						showUserPrivateChannel(userPrivateChannels,currentUser,count,mediator);
+						showUserPrivateChannel(userPrivateChannels,count,mediator);
 						if(!userPrivateChannels.isEmpty()) {
 							System.out.println("Choose channel you want to remove by entering number");
 							int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
@@ -109,7 +118,7 @@ public class UIUtil {
 						}
 						break;
 					case "4":
-						showUserPrivateChannel(userPrivateChannels,currentUser,count,mediator);
+						showUserPrivateChannel(userPrivateChannels,count,mediator);
 						if(!userPrivateChannels.isEmpty()) {
 							System.out.println("Choose channel you want to add participant by entering number");
 							int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
@@ -120,7 +129,7 @@ public class UIUtil {
 						}
 						break;
 					case "5":
-						showUserPrivateChannel(userPrivateChannels,currentUser,count,mediator);
+						showUserPrivateChannel(userPrivateChannels,count,mediator);
 						if(!userPrivateChannels.isEmpty()) {
 							System.out.println("Choose channel you want to remove participant from by entering number");
 							int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
@@ -189,7 +198,7 @@ public class UIUtil {
 			mediator.addTeam(t, false);*/ //Yeni Team böyle eklendiğinde  dosya direk üstüne yazıyor.	
 		}
 	}
-	private static void showUserPrivateChannel(ArrayList<PrivateChannel> userPrivateChannels, User currentUser,int count,Mediator mediator) {
+	private static void showUserPrivateChannel(ArrayList<PrivateChannel> userPrivateChannels,int count,Mediator mediator) {
 		if(userPrivateChannels.isEmpty()) {
 			System.out.println("You dont have any private channel yet");
 		}else {

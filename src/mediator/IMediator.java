@@ -8,8 +8,7 @@ public interface IMediator {
 	public boolean findTeam();
 	public boolean removeTeam(Team team);
 	public boolean removeMeetingChannel(Team team, Channel channel);
-	public boolean updateMeetingChannelTime(String meetingTime,int channelPlace,int teamPlace);
-	public boolean updateMeetingChannelParticipants();
+	public boolean updateMeetingChannelTime(String meetingTime, Channel channel, Team team);
 	public boolean addMememberToTeam();
 	public boolean removeMemberToTeam();
 	public int numberOfStudents();
