@@ -1,5 +1,7 @@
 package userEntities;
 
+import java.util.ArrayList;
+
 import teamEntities.Team;
 
 public class TeachingAsistant extends Academian {
@@ -24,5 +26,12 @@ public class TeachingAsistant extends Academian {
 	}
 	public void addOwnedTeams(Team team) {
 		super.addOwnedTeams(team);
+	}
+	public void removeOwnedTeams(Team team){
+		super.ownedTeams.remove(team);
+	}
+	public ArrayList<Team>  getOwnedTeams() {
+		return super.getOwnedTeams();
+				
 	}
 }

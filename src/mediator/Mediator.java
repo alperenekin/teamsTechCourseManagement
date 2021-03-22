@@ -5,6 +5,7 @@ import java.util.List;
 
 import fileOperations.FileIO;
 import teamEntities.Team;
+import userEntities.Academian;
 import userEntities.Instructor;
 import userEntities.Student;
 import userEntities.TeachingAsistant;
@@ -143,6 +144,10 @@ public class Mediator implements IMediator {
 		for(User user: userList) {
 			if(user.getTeams().contains(team)) {
 				user.getTeams().remove(team);
+				if(user instanceof Academian)
+				{
+					((Academian) user).getOwnedTeams().remove(team);
+				}
 				file.replaceLines(String.valueOf(user.getId()), user.getName(), user.toString(),"userList");
 			}
 		}
