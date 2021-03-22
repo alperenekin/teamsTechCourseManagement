@@ -45,17 +45,17 @@ public class teamTechApp {
 			String teamId = teamStrings.get(i).get(1);
 			String defaultChannelName = teamStrings.get(i).get(2);
 			String meetingTime = teamStrings.get(i).get(3);
-			
-			createPrivateChannelsFromFile(teamStrings,i,channelsOfATeam);
 			Meeting meeting = new Meeting(meetingTime);
 			DefaultChannel defaultChannel = new DefaultChannel(defaultChannelName,meeting);
+			Team team = new Team(teamName,teamId);
+			createPrivateChannelsFromFile(teamStrings,i,team);
+
 			channelsOfATeam.add(defaultChannel);
-			Team team = new Team(teamName,teamId,channelsOfATeam);
-			mediator.addTeam(team);
+			mediator.addTeam(team,true);
 		}
 	}
 	
-	private static void createPrivateChannelsFromFile(ArrayList<ArrayList<String>> teamStrings, int i, ArrayList<Channel> channelsOfATeam) {
+	private static void createPrivateChannelsFromFile(ArrayList<ArrayList<String>> teamStrings, int i, Team team) {
 		if(teamStrings.get(i).size() > 4) {
 			for(int k = 4; k<teamStrings.get(i).size(); k++) {
 				String privateChannelName = teamStrings.get(i).get(k);
@@ -68,7 +68,7 @@ public class teamTechApp {
 						privateChannel.addParticipant(p);
 					}
 					participants.clear();
-					channelsOfATeam.add(privateChannel);
+					team.addPrivateChannel(privateChannel);
 				}else {
 					Meeting newMeeting = new Meeting(newMeetingTime);
 					PrivateChannel privateChannel = new PrivateChannel(privateChannelName,newMeeting);
@@ -76,7 +76,7 @@ public class teamTechApp {
 						privateChannel.addParticipant(p);
 					}
 					participants.clear();
-					channelsOfATeam.add(privateChannel);		
+					team.addPrivateChannel(privateChannel);
 				}
 				k += numberOfShift-1+2;
 			}

@@ -6,6 +6,7 @@ import java.util.Scanner;
 import mediator.Mediator;
 import teamEntities.Channel;
 import teamEntities.DefaultChannel;
+import teamEntities.Meeting;
 import teamEntities.PrivateChannel;
 import teamEntities.Team;
 import userEntities.Instructor;
@@ -161,11 +162,12 @@ public class UIUtil {
 				
 			case "3":
 				
-			default:
-				System.out.println("There is no such an action");
-			}
+			//mediator.removeTeam(currentUser.getTeams().get(0)); Böyle siliyoruz
 			
 			
+			/*Team t = new Team("deneme","deneme101");
+			t.addDefaultChannel(new DefaultChannel("defaultChannel",new Meeting("sabah 10")));
+			mediator.addTeam(t, false);*/ //Yeni Team böyle eklendiğinde  dosya direk üstüne yazıyor.
 		}
 		
 		

@@ -26,16 +26,18 @@ public class Mediator implements IMediator {
 		teamList = new ArrayList<Team>();
 		userList = new ArrayList<User>();
 	}
-	public boolean addTeam(Team team) // team in componentlerý(channel meeting gibi þeyler parametrede alýnýp burada da oluþturulabilir
-	{
-		if(true) //author.getClass() == "Instructor"   this not how you check. fix it 
+	public boolean addTeam(Team team, boolean isFromFile) { //We also add teams while reading from file which is different from user operation.
+		if(isFromFile) //author.getClass() == "Instructor"   this not how you check. fix it 
 		{
 			teamList.add(team);
 			return true;
 		}
-		else
-			//throw new UnauthorizedUserOperationException(); exception handling
+		else { // burada user authoratizaiton check yapÄ±lmalÄ±
+			teamList.add(team);
+			file.addLine(team.toString(),"teamList");
 			return false;
+		}
+
 	}
 	
 	public boolean addUser(String userType, String username, List<String> teamIDs,String userId, String password){
@@ -51,13 +53,15 @@ public class Mediator implements IMediator {
 				id = Integer.parseInt(userId);
 				pwd = password;
 			}
-			if(userType.toUpperCase().equals("INSTRUCTOR")) { //instructor vs enum yapýlabilri
+			if(userType.toUpperCase().equals("INSTRUCTOR")) { //instructor vs enum yapÃ½labilri
 				Instructor instructor = new Instructor(username,id,pwd);
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
 						Team team = findTeamOfUser(teamName);
-						instructor.addTeam(team);// we first teams then users so it is best to add team members as users created.
-						team.addMember(instructor);
+						if(team != null) {
+							instructor.addTeam(team);// we first teams then users so it is best to add team members as users created.
+							team.addMember(instructor);
+						}				
 					}
 					String newLine = instructor.toString();
 					file.replaceLines(oldLineElement, teamIDs.get(0), newLine, "userList");
@@ -67,13 +71,15 @@ public class Mediator implements IMediator {
 				}
 				userList.add(instructor);
 			}
-			else if(userType.toUpperCase().equals("TEACHING ASSISTANT")) { // türkçe karakter olarak upper case yaptý?
+			else if(userType.toUpperCase().equals("TEACHING ASSISTANT")) { // tÃ¼rkÃ§e karakter olarak upper case yaptÃ½?
 				TeachingAsistant teachingAsistant = new TeachingAsistant(username,id,pwd);
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
 						Team team = findTeamOfUser(teamName);
-						team.addMember(teachingAsistant);// we first teams then users so it is best to add team members as users created.
-						teachingAsistant.addTeam(team);
+						if(team != null) {
+							team.addMember(teachingAsistant);// we first teams then users so it is best to add team members as users created.
+							teachingAsistant.addTeam(team);
+						}
 					}
 					String newLine = teachingAsistant.toString();
 					file.replaceLines(oldLineElement, teamIDs.get(0), newLine, "userList");
@@ -89,8 +95,10 @@ public class Mediator implements IMediator {
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
 						Team team = findTeamOfUser(teamName);
-						team.addMember(student);
-						student.addTeam(team); // we first teams then users so it is best to add team members as users created.
+						if(team != null) {
+							team.addMember(student);
+							student.addTeam(team); // we first teams then users so it is best to add team members as users created.
+						}
 					}
 					String newLine = student.toString();
 					file.replaceLines(oldLineElement, teamIDs.get(0), newLine, "userList");
@@ -120,7 +128,14 @@ public class Mediator implements IMediator {
 	}
 	@Override
 	public boolean removeTeam(Team team) {
-		// TODO Auto-generated method stub
+		boolean isSuccess = teamList.remove(team);
+		for(User user: userList) {
+			if(user.getTeams().contains(team)) {
+				user.getTeams().remove(team);
+				file.replaceLines(String.valueOf(user.getId()), user.getName(), user.toString(),"userList");
+			}
+		}
+		file.deleteLines(team.getId(), "teamList");
 		return false;
 	}
 	@Override
@@ -128,7 +143,7 @@ public class Mediator implements IMediator {
 		if(isPrivate) {
 			PrivateChannel privateChannel = new PrivateChannel(channelName, new Meeting(meetingTime));
 			privateChannel.addParticipant(creator);
-			team.addChannel(privateChannel);
+			team.addPrivateChannel(privateChannel);
 			file.replaceLines(team.getId(), null, team.toString(), "teamList"); //add new info to file
 			return true;
 		}

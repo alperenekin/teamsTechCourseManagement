@@ -14,10 +14,10 @@ public class Team {
 	private ArrayList<User> members; //hoca Participantlari id olarak tutmus, sanrm id olarak tutmamiz daha makul olur ve unique olmak zorunda.
 	private ArrayList<Channel> channels;
 
-	public Team (String teamName, String teamId, ArrayList<Channel> channels) {
+	public Team (String teamName, String teamIds) {
 		this.teamName = teamName;
-		this.teamId = teamId;
-		this.channels = channels;
+		this.teamId = teamIds;
+		this.channels = new ArrayList<Channel>();
 		this.members = new ArrayList<User>();
 		this.owners = new ArrayList<User>();
 	}
@@ -36,11 +36,15 @@ public class Team {
 		return members.add(user);
 	}
 	
-	public boolean addChannel(Channel channel)
+	public boolean addPrivateChannel(PrivateChannel privateChannel)
 	{
-		return channels.add(channel);
+		return channels.add(privateChannel);
 	}
 	
+	public boolean addDefaultChannel(DefaultChannel defaultChannel)
+	{
+		return channels.add(defaultChannel);
+	}
 	public boolean removeChannel(Channel newChannel) {
 		ArrayList<Channel> foundChannels = new ArrayList<Channel>();
 		for(Channel channel : channels) {
