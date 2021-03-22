@@ -11,7 +11,7 @@ public class Team {
 	private String teamName;
 	private String teamId;
 	private ArrayList<User> owners;
-	private ArrayList<String> participitans; //hoca Participantlari id olarak tutmus, sanrm id olarak tutmamiz daha makul olur ve unique olmak zorunda.
+	private ArrayList<String> members; //hoca Participantlari id olarak tutmus, sanrm id olarak tutmamiz daha makul olur ve unique olmak zorunda.
 	private ArrayList<Channel> channels;
 
 	public Team (String teamName, String teamId, ArrayList<Channel> channels) {

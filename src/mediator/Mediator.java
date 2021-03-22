@@ -66,7 +66,7 @@ public class Mediator implements IMediator {
 				}
 				userList.add(instructor);
 			}
-			else if(userType.toUpperCase().equals("TEACHÝNG ASSÝSTANT")) { // türkçe karakter olarak upper case yaptý?
+			else if(userType.toUpperCase().equals("TEACHING ASSISTANT")) { // türkçe karakter olarak upper case yaptý?
 				TeachingAsistant teachingAsistant = new TeachingAsistant(username,id,pwd);
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
@@ -155,6 +155,13 @@ public class Mediator implements IMediator {
 		file.replaceLines(team.getId(),  null, team.toString(), "teamList"); //add new info to file
 		return true;
 	}
+	public boolean removeParticipantFromChannel(String  userId, PrivateChannel channel, Team team)
+	{
+		channel.removeParticipant(userId);
+		file.replaceLines(team.getId(),  null, team.toString(), "teamList");
+		return false;
+		
+	}
 	@Override
 	public boolean addMememberToTeam() {
 		// TODO Auto-generated method stub
@@ -217,6 +224,8 @@ public class Mediator implements IMediator {
 		return false;
 	}
 	public void promoteUser(Team team) {
+		
+		
 		/**
 		 * find teaching assistants 
 		 * ask them whitch one is gonna be teamowner

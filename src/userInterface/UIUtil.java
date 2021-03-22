@@ -114,7 +114,15 @@ public class UIUtil {
 							String id = scanner.nextLine();
 							mediator.addParticipantToChannel(id, userPrivateChannels.get(channelNumber),team);
 						}
-						
+					case "5":
+						showUserPrivateChannel(userPrivateChannels,currentUser,count,mediator);
+						if(!userPrivateChannels.isEmpty()) {
+							System.out.println("Choose channel you want to add participant by entering number");
+							int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
+							System.out.println("Enter unique participant Id:");
+							String id = scanner.nextLine();
+							mediator.removeParticipantFromChannel(id, userPrivateChannels.get(channelNumber),team);
+						}
 
 						
 				}

@@ -30,6 +30,12 @@ public class PrivateChannel extends Channel {
 		participants.add(participant);
 		return true;
 	}
+	public boolean removeParticipant(String participant)
+	{
+		boolean returnVal = participants.remove(participant);
+		return returnVal;
+		
+	}
 	public String toString() {
 		if(participants.isEmpty()) {
 			return super.getName() +"," + super.getMeeting().getMeetingTime();
