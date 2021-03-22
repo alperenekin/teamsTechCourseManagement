@@ -1,5 +1,6 @@
 package userEntities;
 
+import mediator.UnauthorizedUserOperationException;
 import teamEntities.Team;
 
 public class Instructor extends Academian {
@@ -10,9 +11,9 @@ public class Instructor extends Academian {
 	{
 		this.getMediator().addTeam(this,teamName);
 	}
-	public void addTeamOwner(Team team)
+	public void addTeamOwner(Team team,User user) throws UnauthorizedUserOperationException
 	{
-		this.getMediator().promoteUser(team);
+		this.getMediator().promoteUser(team,user,this);
 	}
 	@Override
 	public String toString() { //this method needed to convert an object to file line

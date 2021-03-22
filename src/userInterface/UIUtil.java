@@ -136,6 +136,8 @@ public class UIUtil {
 							
 						}
 						break;
+					default:
+						System.out.println("There is no such an action");
 
 						
 				}
@@ -144,6 +146,24 @@ public class UIUtil {
 			
 		}
 		else if (currentUser instanceof Instructor) {
+			System.out.println("1- Add a team");
+			System.out.println("2- Remove a team");
+			System.out.println("3- Update a team");
+			System.out.println("Please enter a number");
+			Scanner scanner= new Scanner(System.in);    //System.in is a standard input stream  
+			String choice = scanner.nextLine();
+			switch (choice)
+			{
+			case "1":				
+				System.out.print("Enter team name");
+				String newChannelName = scanner.nextLine();
+			case "2":
+				
+			case "3":
+				
+			default:
+				System.out.println("There is no such an action");
+			}
 			
 			
 		}

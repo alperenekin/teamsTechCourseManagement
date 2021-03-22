@@ -233,9 +233,18 @@ public class Mediator implements IMediator {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	public void promoteUser(Team team) {
+	public void promoteUser(Team team,User assistant,User promoter) throws UnauthorizedUserOperationException {
 		
-		
+		if(promoter instanceof Instructor && assistant instanceof TeachingAsistant)
+		{
+			team.addOwner(assistant);
+			file.replaceLines(team.getId(), null, team.toString(), "teamList");
+			file.replaceLines(assistant.getEmail(), null, assistant.toString(), "userList");
+			
+		}
+		else {
+			throw new UnauthorizedUserOperationException();
+		}
 		/**
 		 * find teaching assistants 
 		 * ask them whitch one is gonna be teamowner
