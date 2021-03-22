@@ -7,7 +7,7 @@ import teamEntities.Team;
 public abstract class Academian extends User {
 	final String domain = "iyte.edu.tr";
 
-	public ArrayList<Team> ownedTeams;
+	private ArrayList<Team> ownedTeams;
 	public Academian(String userName, int userId, String password)
 	{
 		super(userName,userId,password);

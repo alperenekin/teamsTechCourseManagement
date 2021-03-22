@@ -83,7 +83,7 @@ public class Mediator implements IMediator {
 				}
 				userList.add(instructor);
 			}
-			else if(userType.toUpperCase().equals("TEACHİNG ASSİSTANT")) { // türkçe karakter olarak upper case yaptý?
+			else if(userType.toUpperCase().equals("TEACHING ASSISTANT")) { // türkçe karakter olarak upper case yaptý?
 				TeachingAsistant teachingAsistant = new TeachingAsistant(username,id,pwd);
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
@@ -253,8 +253,21 @@ public class Mediator implements IMediator {
 		
 	}
 	@Override
-	public boolean addMememberToTeam() {
-		// TODO Auto-generated method stub
+	public boolean addMememberToTeam(String id,User currentUser,Team chosenTeam1) {
+		if(currentUser instanceof Academian)
+		{
+			for (int i = 0 ; i< ((Academian) currentUser).getOwnedTeams().size();i++) {
+				if( ((Academian) currentUser).getOwnedTeams().get(i).equals(chosenTeam1)) {
+					User chosenUser = findUserFromId(id);
+					chosenTeam1.addMember(chosenUser);
+					chosenUser.addTeam(chosenTeam1);
+					file.replaceLines(chosenTeam1.getId(), null, chosenTeam1.toString(), "teamList");
+					file.replaceLines(String.valueOf(chosenUser.getId()), chosenUser.getName(), chosenUser.toString(), "userList");
+					
+				}
+			}
+		}
+		
 		return false;
 	}
 	@Override
@@ -361,4 +374,5 @@ public class Mediator implements IMediator {
 		}
 		return foundUser;
 	}
+
 }
