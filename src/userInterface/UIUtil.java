@@ -72,13 +72,13 @@ public class UIUtil {
 				System.out.println("Default Channel Name:".toUpperCase() + channelName);
 				System.out.println("Default Channel Meeting Time:".toUpperCase() + meetingTime);
 				int count = 1;
-				ArrayList<Channel> userPrivateChannels = new ArrayList<Channel>();
+				ArrayList<PrivateChannel> userPrivateChannels = new ArrayList<PrivateChannel>();
 				for(Channel userChannel : channels) {
 					if(userChannel instanceof PrivateChannel) {
 						if(((PrivateChannel) userChannel).isAuserParticipant(String.valueOf(currentUser.getId()))){
-							userPrivateChannels.add(userChannel);
+							userPrivateChannels.add((PrivateChannel) userChannel);
 						}
-;					}
+					}
 				}
 				showUserPrivateChannel(userPrivateChannels,currentUser,count,mediator);
 				System.out.println("Choose an operation by entering a number");
@@ -104,7 +104,16 @@ public class UIUtil {
 							int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
 							mediator.removeMeetingChannel(team, userPrivateChannels.get(channelNumber));
 						}
-
+						break;
+					case "4":
+						showUserPrivateChannel(userPrivateChannels,currentUser,count,mediator);
+						if(!userPrivateChannels.isEmpty()) {
+							System.out.println("Choose channel you want to add participant by entering number");
+							int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
+							System.out.println("Enter unique participant Id:");
+							String id = scanner.nextLine();
+							mediator.addParticipantToChannel(id, userPrivateChannels.get(channelNumber),team);
+						}
 						
 
 						
@@ -114,7 +123,7 @@ public class UIUtil {
 		
 	}
 	
-	private static void showUserPrivateChannel(ArrayList<Channel> userPrivateChannels, User currentUser,int count,Mediator mediator) {
+	private static void showUserPrivateChannel(ArrayList<PrivateChannel> userPrivateChannels, User currentUser,int count,Mediator mediator) {
 		if(userPrivateChannels.isEmpty()) {
 			System.out.println("You dont have any private channel yet");
 		}else {

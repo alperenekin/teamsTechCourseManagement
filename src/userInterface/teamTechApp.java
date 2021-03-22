@@ -123,11 +123,11 @@ public class teamTechApp {
 				}
 				else {
 					if(line.get(i).get(x+j).endsWith("\"")) {
-						participants.add(line.get(i).get(x+j).substring(1,len-1));
+						participants.add(line.get(i).get(x+j).substring(0,len-1));
 						count++;
 						return count;
 					}else {
-						participants.add(line.get(i).get(x+j).substring(1,len));
+						participants.add(line.get(i).get(x+j).substring(0,len));
 						count++;
 					}
 				}

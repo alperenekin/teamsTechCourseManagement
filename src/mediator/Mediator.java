@@ -149,6 +149,12 @@ public class Mediator implements IMediator {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	public boolean addParticipantToChannel(String  userId, PrivateChannel channel, Team team) {
+		channel.addParticipant(userId);
+		file.replaceLines(team.getId(),  null, team.toString(), "teamList"); //add new info to file
+		return true;
+	}
 	@Override
 	public boolean addMememberToTeam() {
 		// TODO Auto-generated method stub
