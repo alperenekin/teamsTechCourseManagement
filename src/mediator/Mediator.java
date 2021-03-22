@@ -299,7 +299,7 @@ public class Mediator implements IMediator {
 		return totalTeachingAssistants;
 	}
 
-	public void promoteUser(Team team,User assistant,User promoter) throws UnauthorizedUserOperationException {
+	public void promoteUser(Team team,User assistant,User promoter)  {
 		
 		if(promoter instanceof Instructor && assistant instanceof TeachingAsistant)
 		{
@@ -309,7 +309,12 @@ public class Mediator implements IMediator {
 			
 		}
 		else {
-			throw new UnauthorizedUserOperationException();
+			try {
+				throw new UnauthorizedUserOperationException();
+			} catch (UnauthorizedUserOperationException e) {
+				System.out.println("You dont have to permission to perform this task");
+				e.printStackTrace();
+			}
 		}
 		/**
 		 * find teaching assistants 

@@ -18,3 +18,4 @@ public interface IMediator {
 	boolean addMeetingChannel(Team team,String channelName,String meetingTime, boolean isPrivate, String creator);
 	
 }
+	

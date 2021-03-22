@@ -12,6 +12,7 @@ import teamEntities.Team;
 import userEntities.Academian;
 import userEntities.Instructor;
 import userEntities.Student;
+import userEntities.TeachingAsistant;
 import userEntities.User;
 
 public class UIUtil {
@@ -163,6 +164,7 @@ public class UIUtil {
 				break;
 			case "2":
 				
+				
 				for(int i=0;i< ((Academian) currentUser).getOwnedTeams().size();i++) {
 					System.out.print(i+1);
 					System.out.println("-" + ((Academian) currentUser).getOwnedTeams().get(i).getId());
@@ -174,6 +176,40 @@ public class UIUtil {
 				
 				break;
 			case "3":
+				System.out.println("Choose an operation by entering a number");
+				System.out.println("0-promote User");
+				System.out.println("1-Create Private Channel");
+				System.out.println("2-Update meeting day and time of private channel");
+				System.out.println("3-Remove Private Channel");
+				System.out.println("4-Add Participant to Private Channel");
+				System.out.println("5-Remove a participant from Private Channel");
+				String choice2 = scanner.nextLine();
+				switch (choice2)
+				{
+				case "0":
+					for(int i=0;i< ((Academian) currentUser).getOwnedTeams().size();i++) {
+						System.out.print(i+1);
+						System.out.println("-" + ((Academian) currentUser).getOwnedTeams().get(i).getId());
+					}
+					System.out.print("Choose the team for promoting by entering number:");
+					int promoteIndex = Integer.parseInt(scanner.nextLine())-1;
+					ArrayList<TeachingAsistant> tempAsistants = new ArrayList<TeachingAsistant>();
+					Team chosenTeam = ((Academian) currentUser).getOwnedTeams().get(promoteIndex);
+					for(int j = 0 ; j < chosenTeam.getMembers().size();j++) {
+						if(chosenTeam.getMembers().get(j) instanceof TeachingAsistant) {
+							tempAsistants.add((TeachingAsistant) chosenTeam.getMembers().get(j));
+						}
+					}
+					for(int i=0;i<tempAsistants.size();i++) {
+						System.out.print(i+1);
+						System.out.println("-" + tempAsistants.get(i).getName());
+						
+					}
+					System.out.print("Choose the teaching assistant for promoting by entering number:");
+					int promoteAsistantIndex = Integer.parseInt(scanner.nextLine())-1;
+					mediator.promoteUser(chosenTeam, tempAsistants.get(promoteAsistantIndex), currentUser);					
+				}
+				
 				break;
 			default:
 				System.out.println("There is no such an action");

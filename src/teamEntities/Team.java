@@ -106,6 +106,9 @@ public class Team {
 		}
 		return null;
 	}
+	public ArrayList<User> getMembers() {
+		return members;
+	}
 
 	
 }
