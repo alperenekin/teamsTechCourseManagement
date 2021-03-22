@@ -151,9 +151,16 @@ public class Mediator implements IMediator {
 	}
 	
 	public boolean addParticipantToChannel(String  userId, PrivateChannel channel, Team team) {
-		channel.addParticipant(userId);
-		file.replaceLines(team.getId(),  null, team.toString(), "teamList"); //add new info to file
-		return true;
+		User user = findUserFromId(userId);
+		if(user.getTeams().contains(team.getId())) {
+			channel.addParticipant(userId);
+			file.replaceLines(team.getId(),  null, team.toString(), "teamList"); //add new info to file
+			return true;
+		}else {
+			System.out.println("This user does not belong to team");
+			return false;
+		}
+		
 	}
 	@Override
 	public boolean addMememberToTeam() {
@@ -255,5 +262,15 @@ public class Mediator implements IMediator {
 		}
 		return returnUser;
 		
+	}
+	
+	private User findUserFromId(String id) {
+		User foundUser = null;
+		for(User user : userList) {
+			if(user.getId() == Integer.parseInt(id)){
+				foundUser = user;
+			}
+		}
+		return foundUser;
 	}
 }

@@ -15,7 +15,7 @@ public abstract class User{
 	private String email; //also used as login username
 	private String passwd;
 	private String department;
-	private List<Team> teams;
+	private ArrayList<Team> teams;
 	
 	public User() {
 		
@@ -40,7 +40,7 @@ public abstract class User{
 	public Mediator getMediator() {
 		return mediator;
 	}
-	public List<Team> getTeams() {
+	public ArrayList<Team> getTeams() {
 		return teams;
 	}
 	public void addTeam(Team team) {
