@@ -1,6 +1,6 @@
 package teamEntities;
 
-public class Meeting {
+public class Meeting implements IUpdateable{
 	private String name;
 	//private Time meetingTime; time implement etmek istiyor muyuz , gün saat ve am/pm enumu olarak üç attribute dan oluşan, yani bi seçenek ama gereklilik değil. 
 	private String meetingTime; //şimdilik string kolay olur gibi
@@ -17,5 +17,10 @@ public class Meeting {
 	}
 	public void setMeetingTime(String meetingTime) {
 		this.meetingTime = meetingTime;
+	}
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 }

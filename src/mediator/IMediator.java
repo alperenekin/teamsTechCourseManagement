@@ -18,6 +18,6 @@ public interface IMediator {
 	public boolean showMeetingTime();
 	public boolean showParticipants();
 	boolean addTeam(User author, String teamName);
-	boolean addMeetingChannel(Team team, String publicity, String name);
+	boolean addMeetingChannel(Team team,String channelName,String meetingTime, boolean isPrivate, String creator);
 	
 }

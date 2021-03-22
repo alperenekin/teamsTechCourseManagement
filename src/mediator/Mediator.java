@@ -9,11 +9,17 @@ import userEntities.Instructor;
 import userEntities.Student;
 import userEntities.TeachingAsistant;
 import userEntities.User;
+import teamEntities.PrivateChannel;
+import teamEntities.Meeting;
 
 public class Mediator implements IMediator {
 	private ArrayList<Team> teamList;
 	private ArrayList<User> userList;
+	private FileIO file = new FileIO();
 
+	public ArrayList<User> getUserList() { // silinebilir
+		return userList;
+	}
 	public Mediator()
 	{
 		teamList = new ArrayList<Team>();
@@ -34,7 +40,6 @@ public class Mediator implements IMediator {
 	public boolean addUser(String userType, String username, List<String> teamIDs,String userId, String password){
 		if(true) //author.getClass() == "Instructor"   this not how you check. fix it 
 		{
-			FileIO file = new FileIO();
 			String oldLineElement = username; // this will help us to choose which line we will update.
 			int id;
 			String pwd;
@@ -115,7 +120,14 @@ public class Mediator implements IMediator {
 		return false;
 	}
 	@Override
-	public boolean addMeetingChannel(Team team,String publicity,String name) {
+	public boolean addMeetingChannel(Team team,String channelName,String meetingTime, boolean isPrivate, String creator) {
+		if(isPrivate) {
+			PrivateChannel privateChannel = new PrivateChannel(channelName, new Meeting(meetingTime));
+			privateChannel.addParticipant(creator);
+			team.addChannel(privateChannel);
+			file.replaceLines(team.getId(), null, team.toString(), "teamList"); //add new info to file
+			return true;
+		}
 		return false;
 		//return team.addChannel(publicity,name);
 	}
@@ -208,7 +220,6 @@ public class Mediator implements IMediator {
 		for(User user: userList) {
 			if(user instanceof Instructor) {
 				for(Team team : teamList) {
-					System.out.println(team.toString());
 					for(Team userTeam : user.getTeams()) {
 						if(userTeam.getId().equals(team.getId())) {
 							team.addOwner(user);
@@ -230,7 +241,7 @@ public class Mediator implements IMediator {
 		for(int i = 0 ; i < userList.size(); i++)
 		{
 			
-			if(userList.get(i).getEmail().contentEquals(userName) && userList.get(i).getPasswd() == passwd ) {
+			if(userList.get(i).getEmail().contentEquals(userName) && userList.get(i).getPasswd().equals(passwd)) {
 				returnUser = userList.get(i);
 			}
 		}

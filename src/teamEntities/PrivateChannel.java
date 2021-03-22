@@ -6,14 +6,20 @@ import userEntities.User;
 
 public class PrivateChannel extends Channel {
 	ArrayList<String> participants; //user ids are kept in participants.
-	
+
+
 	public PrivateChannel(String name, Meeting meeting) {
 		super(name, meeting);
 		this.participants = new ArrayList<String>();
 	}
+	
+	
+	public ArrayList<String> getParticipants() {
+		return participants;
+	}
 
 	@Override
-	boolean isAuserParticipant(String userId) {
+	public boolean isAuserParticipant(String userId) {
 		if(participants.contains(userId)) {
 			return true;
 		}
@@ -25,6 +31,9 @@ public class PrivateChannel extends Channel {
 		return true;
 	}
 	public String toString() {
+		if(participants.isEmpty()) {
+			return super.getName() +"," + super.getMeeting().getMeetingTime();
+		}
 		String participants = "\"";
 		for(String participant : this.participants) {
 			participants +=  participant + ",";

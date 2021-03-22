@@ -13,7 +13,7 @@ public class Team {
 	private ArrayList<User> owners;
 	private ArrayList<String> participitans; //hoca Participantlari id olarak tutmus, sanrm id olarak tutmamiz daha makul olur ve unique olmak zorunda.
 	private ArrayList<Channel> channels;
-	
+
 	public Team (String teamName, String teamId, ArrayList<Channel> channels) {
 		this.teamName = teamName;
 		this.teamId = teamId;
@@ -23,10 +23,25 @@ public class Team {
 	public String getId() {
 		return teamId;
 	}
+	
+	public String getTeamName() {
+		return teamName;
+	}
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
+
 	public boolean addChannel(Channel channel)
 	{
 		channels.add(channel);
-		return false;
+		return true;
+	}
+	
+	public ArrayList<Channel> getChannels() {
+		return channels;
+	}
+	public void setChannels(ArrayList<Channel> channels) {
+		this.channels = channels;
 	}
 	
 	public boolean addOwner(User teamOwner)
@@ -36,8 +51,9 @@ public class Team {
 	}
 	
 	public String toString() {		
-		String defaultChannel = channels.get(channels.size()-1).getName();
-		String defaultMeeting = channels.get(channels.size()-1).getMeeting().getMeetingTime();
+		DefaultChannel defaultChannel = findDefaultChannel();
+		String channelName = defaultChannel.getName();
+		String defaultMeeting = defaultChannel.getMeeting().getMeetingTime();
 		String privateChannels = "";
 		for(Channel channel : channels) {
 			if(channel instanceof PrivateChannel) {
@@ -46,11 +62,19 @@ public class Team {
 		}
 		if(privateChannels.length()>1) {
 			privateChannels = privateChannels.substring(0,privateChannels.length()-1);
-			return this.teamName + "," + this.teamId + "," + defaultChannel + "," + defaultMeeting + "," + privateChannels;
+			return this.teamName + "," + this.teamId + "," + channelName + "," + defaultMeeting + "," + privateChannels;
 		}
-		return this.teamName + "," + this.teamId + "," + defaultChannel + "," + defaultMeeting;
+		return this.teamName + "," + this.teamId + "," + channelName + "," + defaultMeeting;
 
-		
+	}
+	
+	public DefaultChannel findDefaultChannel() {
+		for(Channel channel : channels) {
+			if(channel instanceof DefaultChannel){
+				return (DefaultChannel) channel;
+			}
+		}
+		return null;
 	}
 	public ArrayList<Channel> getChannels(){
 		return channels;

@@ -57,24 +57,28 @@ public class teamTechApp {
 	
 	private static void createPrivateChannelsFromFile(ArrayList<ArrayList<String>> teamStrings, int i, ArrayList<Channel> channelsOfATeam) {
 		if(teamStrings.get(i).size() > 4) {
-			String privateChannelName = teamStrings.get(i).get(4);
-			String newMeetingTime = teamStrings.get(i).get(5);
-			ArrayList<String> participants = new ArrayList<String>();
-			createParticipantsForChannel(participants, teamStrings,i);
-			if(newMeetingTime.isEmpty()) {
-				PrivateChannel privateChannel = new PrivateChannel(privateChannelName,null);
-				for(String p : participants) {
-					privateChannel.addParticipant(p);
+			for(int k = 4; k<teamStrings.get(i).size(); k++) {
+				String privateChannelName = teamStrings.get(i).get(k);
+				String newMeetingTime = teamStrings.get(i).get(k+1);
+				ArrayList<String> participants = new ArrayList<String>();
+				int numberOfShift = createParticipantsForChannel(participants, teamStrings,i,k+2);
+				if(newMeetingTime.isEmpty()) {
+					PrivateChannel privateChannel = new PrivateChannel(privateChannelName,null);
+					for(String p : participants) {
+						privateChannel.addParticipant(p);
+					}
+					participants.clear();
+					channelsOfATeam.add(privateChannel);
+				}else {
+					Meeting newMeeting = new Meeting(newMeetingTime);
+					PrivateChannel privateChannel = new PrivateChannel(privateChannelName,newMeeting);
+					for(String p : participants) {
+						privateChannel.addParticipant(p);
+					}
+					participants.clear();
+					channelsOfATeam.add(privateChannel);		
 				}
-				channelsOfATeam.add(privateChannel);
-			}else {
-				Meeting newMeeting = new Meeting(newMeetingTime);
-				PrivateChannel privateChannel = new PrivateChannel(privateChannelName,newMeeting);
-				for(String p : participants) {
-					privateChannel.addParticipant(p);
-				}
-				channelsOfATeam.add(privateChannel);
-				
+				k += numberOfShift-1+2;
 			}
 		}
 	}
@@ -102,22 +106,34 @@ public class teamTechApp {
 		}
 	}
 	
-	private static void createParticipantsForChannel(ArrayList<String> participants, ArrayList<ArrayList<String>> line ,int i) {
+	private static int createParticipantsForChannel(ArrayList<String> participants, ArrayList<ArrayList<String>> line ,int i,int x) {
+		int count = 0 ;
 		for(int j = 0; j<line.get(i).size(); j++) {
-			if((6+j) <line.get(i).size()) {
-				int len = line.get(i).get(6+j).length(); // TODO 6 lar deðiþmeli
-				if(line.get(i).get(6+j).startsWith("\"")){
-					participants.add(line.get(i).get(6+j).substring(1,len));
+			if((x+j) <line.get(i).size()) {
+				int len = line.get(i).get(x+j).length(); // TODO 6 lar deðiþmeli
+				if(line.get(i).get(x+j).startsWith("\"")){
+					if(line.get(i).get(x+j).endsWith("\"")) {
+						participants.add(line.get(i).get(x+j).substring(1,len-1));
+						count++;
+						return count;
+					}else {
+						participants.add(line.get(i).get(x+j).substring(1,len));
+						count++;
+					}
 				}
 				else {
-					if(line.get(i).get(6+j).endsWith("\"")) {
-						participants.add(line.get(i).get(6+j).substring(1,len-1));
+					if(line.get(i).get(x+j).endsWith("\"")) {
+						participants.add(line.get(i).get(x+j).substring(1,len-1));
+						count++;
+						return count;
 					}else {
-						participants.add(line.get(i).get(6+j).substring(1,len));
+						participants.add(line.get(i).get(x+j).substring(1,len));
+						count++;
 					}
 				}
 			}
 		}
+		return 0;
 	}
 	
 }
