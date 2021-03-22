@@ -56,25 +56,11 @@ public class UIUtil {
 			Scanner scanner= new Scanner(System.in);    //System.in is a standard input stream  
 			String choice = scanner.nextLine();
 			if(choice.equals("1")) {
-				for(int i=0;i< currentUser.getTeams().size();i++) {
-					System.out.print(i+1);
-					System.out.println("-" + currentUser.getTeams().get(i).getId());
-				}
+				mediator.monitorTeamsOfUser(currentUser);
 				System.out.print("Choose the team by entering number:");
 				int index = Integer.parseInt(scanner.nextLine())-1;
-					Team team = currentUser.getTeams().get(index);
-				String teamName = team.getTeamName();
-				String teamId = team.getId();
+				Team team = currentUser.getTeams().get(index);
 				ArrayList<Channel> channels = team.getChannels();
-				
-				DefaultChannel defaultChannel = team.findDefaultChannel();
-				String channelName = defaultChannel.getName();
-				String meetingTime = defaultChannel.getMeeting().getMeetingTime();
-				System.out.println("Team Name:".toUpperCase() + teamName);
-				System.out.println("Team Id:".toUpperCase() + teamId);
-				System.out.println("Default Channel Name:".toUpperCase() + channelName);
-				System.out.println("Default Channel Meeting Time:".toUpperCase() + meetingTime);
-				int count = 1;
 				ArrayList<PrivateChannel> userPrivateChannels = new ArrayList<PrivateChannel>();
 				for(Channel userChannel : channels) {
 					if(userChannel instanceof PrivateChannel) {
@@ -83,7 +69,9 @@ public class UIUtil {
 						}
 					}
 				}
-				showUserPrivateChannel(userPrivateChannels,count,mediator);
+				mediator.monitorTeamDetailsOfUser(index, currentUser, userPrivateChannels);
+				int count = 1;
+				mediator.monitorPrivateChanelsOfUser(userPrivateChannels,count);
 				System.out.println("Choose an operation by entering a number");
 				System.out.println("1-Create Private Channel");
 				System.out.println("2-Update meeting day and time of private channel");
@@ -100,7 +88,7 @@ public class UIUtil {
 						mediator.addMeetingChannel(team, newChannelName, newMeetingTime,true, String.valueOf(currentUser.getId()));
 						break;
 					case "2":
-						showUserPrivateChannel(userPrivateChannels,count,mediator);
+						mediator.monitorPrivateChanelsOfUser(userPrivateChannels,count);
 						if(!userPrivateChannels.isEmpty()) {
 							System.out.println("Choose channel you want to update meeting time");
 							int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
@@ -110,7 +98,7 @@ public class UIUtil {
 						}
 						break;
 					case "3":
-						showUserPrivateChannel(userPrivateChannels,count,mediator);
+						mediator.monitorPrivateChanelsOfUser(userPrivateChannels,count);
 						if(!userPrivateChannels.isEmpty()) {
 							System.out.println("Choose channel you want to remove by entering number");
 							int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
@@ -118,7 +106,7 @@ public class UIUtil {
 						}
 						break;
 					case "4":
-						showUserPrivateChannel(userPrivateChannels,count,mediator);
+						mediator.monitorPrivateChanelsOfUser(userPrivateChannels,count);
 						if(!userPrivateChannels.isEmpty()) {
 							System.out.println("Choose channel you want to add participant by entering number");
 							int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
@@ -129,7 +117,7 @@ public class UIUtil {
 						}
 						break;
 					case "5":
-						showUserPrivateChannel(userPrivateChannels,count,mediator);
+						mediator.monitorPrivateChanelsOfUser(userPrivateChannels,count);
 						if(!userPrivateChannels.isEmpty()) {
 							System.out.println("Choose channel you want to remove participant from by entering number");
 							int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
@@ -198,30 +186,6 @@ public class UIUtil {
 			mediator.addTeam(t, false);*/ //Yeni Team böyle eklendiğinde  dosya direk üstüne yazıyor.	
 		}
 	}
-	private static void showUserPrivateChannel(ArrayList<PrivateChannel> userPrivateChannels,int count,Mediator mediator) {
-		if(userPrivateChannels.isEmpty()) {
-			System.out.println("You dont have any private channel yet");
-		}else {
-			for(Channel privateChannels : userPrivateChannels) {
-				System.out.println("PRIVATE CHANNEL: " + count +"-"+ privateChannels.getName());
-				if(privateChannels.getMeeting() != null) {
-					System.out.println("MEETING TIME" +":"+ privateChannels.getMeeting().getMeetingTime());
-				}
-				System.out.println("PARTICIPANTS" +":"+ findNamesOfParticipants(mediator,((PrivateChannel) privateChannels).getParticipants()));
-				count++;
-			}
-		}
-	}
-	private static String findNamesOfParticipants(Mediator mediator, ArrayList<String> participants) {
-		String output = "";
-		for(String userId : participants) {
-			for(User user : mediator.getUserList()) {
-				if(userId.equals(String.valueOf(user.getId()))) {
-					output += (user.getName() + "");
-				}
-			}
-		}
-		return output;
-	}
+
 
 }

@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fileOperations.FileIO;
-import teamEntities.Team;
+import teamEntities.*;
 import userEntities.Academian;
 import userEntities.Instructor;
 import userEntities.Student;
 import userEntities.TeachingAsistant;
 import userEntities.User;
-import teamEntities.PrivateChannel;
-import teamEntities.Channel;
-import teamEntities.Meeting;
 
 public class Mediator implements IMediator {
 	private ArrayList<Team> teamList;
@@ -86,7 +83,7 @@ public class Mediator implements IMediator {
 				}
 				userList.add(instructor);
 			}
-			else if(userType.toUpperCase().equals("TEACHING ASSISTANT")) { // türkçe karakter olarak upper case yaptý?
+			else if(userType.toUpperCase().equals("TEACHİNG ASSİSTANT")) { // türkçe karakter olarak upper case yaptý?
 				TeachingAsistant teachingAsistant = new TeachingAsistant(username,id,pwd);
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
@@ -127,7 +124,56 @@ public class Mediator implements IMediator {
 		}
 		return true;
 	}
-	
+
+	public void monitorTeamsOfUser(User currentUser){
+		for(int i=0;i< currentUser.getTeams().size();i++) {
+			System.out.print(i+1);
+			System.out.println("-" + currentUser.getTeams().get(i).getId());
+		}
+	}
+
+	public void monitorTeamDetailsOfUser(int index, User currentUser,ArrayList<PrivateChannel> userPrivateChannels){
+		Team team = currentUser.getTeams().get(index);
+		String teamName = team.getTeamName();
+		String teamId = team.getId();
+		ArrayList<Channel> channels = team.getChannels();
+
+		DefaultChannel defaultChannel = team.findDefaultChannel();
+		String channelName = defaultChannel.getName();
+		String meetingTime = defaultChannel.getMeeting().getMeetingTime();
+		System.out.println("Team Name:".toUpperCase() + teamName);
+		System.out.println("Team Id:".toUpperCase() + teamId);
+		System.out.println("Default Channel Name:".toUpperCase() + channelName);
+		System.out.println("Default Channel Meeting Time:".toUpperCase() + meetingTime);
+	}
+
+	public void monitorPrivateChanelsOfUser(ArrayList<PrivateChannel> userPrivateChannels,int count) {
+		if(userPrivateChannels.isEmpty()) {
+			System.out.println("You dont have any private channel yet");
+		}else {
+			for(Channel privateChannels : userPrivateChannels) {
+				System.out.println("PRIVATE CHANNEL: " + count +"-"+ privateChannels.getName());
+				if(privateChannels.getMeeting() != null) {
+					System.out.println("MEETING TIME" +":"+ privateChannels.getMeeting().getMeetingTime());
+				}
+				System.out.println("PARTICIPANTS" +":"+ findNamesOfParticipants(((PrivateChannel) privateChannels).getParticipants()));
+				count++;
+			}
+		}
+	}
+
+
+	private String findNamesOfParticipants(ArrayList<String> participants) {
+		String output = "";
+		for(String userId : participants) {
+			for(User user : userList) {
+				if(userId.equals(String.valueOf(user.getId()))) {
+					output += (user.getName() + "");
+				}
+			}
+		}
+		return output;
+	}
 	private Team findTeamOfUser(String teamID) {
 		for(Team team : teamList) {
 			if(teamID.equals(team.getId())){
@@ -252,21 +298,7 @@ public class Mediator implements IMediator {
 		}
 		return totalTeachingAssistants;
 	}
-	@Override
-	public boolean showMeetingChanels() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean showMeetingTime() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean showParticipants() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 	public void promoteUser(Team team,User assistant,User promoter) throws UnauthorizedUserOperationException {
 		
 		if(promoter instanceof Instructor && assistant instanceof TeachingAsistant)
