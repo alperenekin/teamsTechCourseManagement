@@ -8,6 +8,7 @@ import teamEntities.Channel;
 import teamEntities.DefaultChannel;
 import teamEntities.PrivateChannel;
 import teamEntities.Team;
+import userEntities.Instructor;
 import userEntities.Student;
 import userEntities.User;
 
@@ -117,17 +118,32 @@ public class UIUtil {
 					case "5":
 						showUserPrivateChannel(userPrivateChannels,currentUser,count,mediator);
 						if(!userPrivateChannels.isEmpty()) {
-							System.out.println("Choose channel you want to add participant by entering number");
+							System.out.println("Choose channel you want to remove participant from by entering number");
 							int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
 							System.out.println("Enter unique participant Id:");
 							String id = scanner.nextLine();
-							mediator.removeParticipantFromChannel(id, userPrivateChannels.get(channelNumber),team);
+							boolean success = mediator.removeParticipantFromChannel(id, userPrivateChannels.get(channelNumber),team);
+							if(success)
+							{
+								System.out.println("Participant removed succesfully \n");
+							}
+							else
+							{
+								System.out.println("There is no participant with id: "+ (String) id);
+							}
 						}
 
 						
 				}
+				
 			}
+			
 		}
+		else if (currentUser instanceof Instructor) {
+			
+			
+		}
+		
 		
 	}
 	

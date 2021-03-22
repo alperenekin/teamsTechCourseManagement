@@ -152,7 +152,7 @@ public class Mediator implements IMediator {
 	
 	public boolean addParticipantToChannel(String  userId, PrivateChannel channel, Team team) {
 		User user = findUserFromId(userId);
-		if(user.getTeams().contains(team.getId())) {
+		if(user.getTeams().contains(team)) {
 			channel.addParticipant(userId);
 			file.replaceLines(team.getId(),  null, team.toString(), "teamList"); //add new info to file
 			return true;
