@@ -7,10 +7,7 @@ public class Instructor extends Academian {
 	public	Instructor(String userName, int userId,String password) {
 		super(userName,userId,password);
 	}
-	public void createTeam(String teamName)
-	{
-		this.getMediator().addTeam(this,teamName);
-	}
+	
 	public void addTeamOwner(Team team,User user) throws UnauthorizedUserOperationException
 	{
 		this.getMediator().promoteUser(team,user,this);
