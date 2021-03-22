@@ -9,6 +9,7 @@ import teamEntities.DefaultChannel;
 import teamEntities.Meeting;
 import teamEntities.PrivateChannel;
 import teamEntities.Team;
+import userEntities.Academian;
 import userEntities.Instructor;
 import userEntities.Student;
 import userEntities.User;
@@ -146,7 +147,7 @@ public class UIUtil {
 			}
 			
 		}
-		else if (currentUser instanceof Instructor) {
+		else if (currentUser instanceof Academian) {
 			System.out.println("1- Add a team");
 			System.out.println("2- Remove a team");
 			System.out.println("3- Update a team");
@@ -161,11 +162,22 @@ public class UIUtil {
 				System.out.print("Enter id(only lecture code. Ceng will be added automaticly.)");
 				String newTeamlId = scanner.nextLine();
 				mediator.addTeam(new Team(newTeamName,newTeamlId,currentUser), false,currentUser);
-				
+				//System.out.println(((Instructor) currentUser).getOwnedTeams());
+				break;
 			case "2":
 				
-			case "3":
+				for(int i=0;i< ((Academian) currentUser).getOwnedTeams().size();i++) {
+					System.out.print(i+1);
+					System.out.println("-" + ((Academian) currentUser).getOwnedTeams().get(i).getId());
+				}
+				System.out.print("Choose the team by entering number:");
+				int index = Integer.parseInt(scanner.nextLine())-1;
+				Team team = ((Academian) currentUser).getOwnedTeams().get(index);
+				mediator.removeTeam(team);
 				
+				break;
+			case "3":
+				break;
 			default:
 				System.out.println("There is no such an action");
 			}

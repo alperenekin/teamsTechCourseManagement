@@ -15,13 +15,14 @@ public abstract class Academian extends User {
 		String name = nameSurname[0].toLowerCase();
 		String surname = nameSurname[1].toLowerCase();
 		super.setEmail(name+surname+"@"+domain);
+		ownedTeams = new ArrayList<Team>();
 	}
 	
 	public ArrayList<Team>  getOwnedTeams() {
 		return this.ownedTeams;
 	}
 	public void addOwnedTeams(Team team) {
-		ownedTeams.add(team);
+		this.ownedTeams.add(team);
 	}
 	public void removeOwnedTeams(Team team){
 		ownedTeams.remove(team);

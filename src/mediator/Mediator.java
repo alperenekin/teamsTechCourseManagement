@@ -35,7 +35,10 @@ public class Mediator implements IMediator {
 		}
 		else {
 			if(currentUser instanceof Instructor)// burada user authoratizaiton check yapılmalı
-			{teamList.add(team);
+			{
+			teamList.add(team);
+			((Instructor) currentUser).addOwnedTeams(team);
+			currentUser.addTeam(team);
 			file.addLine(team.toString(),"teamList");
 			return true;}
 			else {
