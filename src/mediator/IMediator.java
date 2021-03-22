@@ -18,7 +18,7 @@ public interface IMediator {
 	public boolean showMeetingChanels();
 	public boolean showMeetingTime();
 	public boolean showParticipants();
-	boolean addTeam(User author, String teamName);
+	boolean addTeam(Team team, boolean isFromFile,User currentUser);
 	boolean addMeetingChannel(Team team,String channelName,String meetingTime, boolean isPrivate, String creator);
 	
 }

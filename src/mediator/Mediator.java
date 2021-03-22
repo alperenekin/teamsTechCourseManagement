@@ -26,17 +26,27 @@ public class Mediator implements IMediator {
 		teamList = new ArrayList<Team>();
 		userList = new ArrayList<User>();
 	}
-	public boolean addTeam(Team team, boolean isFromFile) { //We also add teams while reading from file which is different from user operation.
+	public boolean addTeam(Team team, boolean isFromFile,User currentUser) { //We also add teams while reading from file which is different from user operation.
 		if(isFromFile) //author.getClass() == "Instructor"   this not how you check. fix it 
 		{
 			teamList.add(team);
 			return true;
 		}
-		else { // burada user authoratizaiton check yapılmalı
-			teamList.add(team);
+		else {
+			if(currentUser instanceof Instructor)// burada user authoratizaiton check yapılmalı
+			{teamList.add(team);
 			file.addLine(team.toString(),"teamList");
-			return false;
+			return true;}
+			else {
+				try {
+					throw new UnauthorizedUserOperationException();
+				} catch (UnauthorizedUserOperationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
+		return true;
 
 	}
 	
@@ -61,6 +71,7 @@ public class Mediator implements IMediator {
 						if(team != null) {
 							instructor.addTeam(team);// we first teams then users so it is best to add team members as users created.
 							team.addMember(instructor);
+							team.addOwner(instructor);
 						}				
 					}
 					String newLine = instructor.toString();
@@ -281,11 +292,7 @@ public class Mediator implements IMediator {
 		}
 	}
 	
-	@Override
-	public boolean addTeam(User author, String teamName) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 	public User findUser(String userName,String passwd) {
 		
 		User returnUser= null; 

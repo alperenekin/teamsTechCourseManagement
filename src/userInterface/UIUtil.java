@@ -157,7 +157,11 @@ public class UIUtil {
 			{
 			case "1":				
 				System.out.print("Enter team name");
-				String newChannelName = scanner.nextLine();
+				String newTeamName = scanner.nextLine();
+				System.out.print("Enter id(only lecture code. Ceng will be added automaticly.)");
+				String newTeamlId = scanner.nextLine();
+				mediator.addTeam(new Team(newTeamName,newTeamlId,currentUser), false,currentUser);
+				
 			case "2":
 				
 			case "3":

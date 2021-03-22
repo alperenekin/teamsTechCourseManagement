@@ -32,4 +32,7 @@ public class Instructor extends Academian {
 		
 		return type + "," + username + "," + userid +"," + email + "," + password +"," + teams;
 	}
+	public void addOwnedTeams(Team team) {
+		super.addOwnedTeams(team);
+	}
 }

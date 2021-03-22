@@ -21,6 +21,17 @@ public class Team {
 		this.members = new ArrayList<User>();
 		this.owners = new ArrayList<User>();
 	}
+	public Team(String teamName,String id,User author) {
+		this.teamName = teamName;
+		this.teamId = "CENG"+id;
+		this.channels = new ArrayList<Channel>();
+		this.channels.add(new DefaultChannel());
+		this.members = new ArrayList<User>();
+		members.add(author);
+		this.owners = new ArrayList<User>();
+		owners.add(author);
+		
+	}
 	public String getId() {
 		return teamId;
 	}

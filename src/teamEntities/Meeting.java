@@ -7,6 +7,7 @@ public class Meeting implements IUpdateable{
 	public Meeting()
 	{
 		this.name = "meeting";
+		this.meetingTime="Monday 9:45";
 	}
 	public Meeting(String meetingTime) //meetinglerin adı yok gibi, default olma gibi birşey tutulabilir.
 	{
@@ -19,8 +20,8 @@ public class Meeting implements IUpdateable{
 		this.meetingTime = meetingTime;
 	}
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
+	public void update(String meetingTime) {
+		this.meetingTime = meetingTime;
 		
 	}
 }

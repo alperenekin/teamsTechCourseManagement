@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import userEntities.User;
 
-public abstract class Channel implements IUpdateable{
+public abstract class Channel {
 	private String name;
 	private Meeting meeting;
 
@@ -14,11 +14,6 @@ public abstract class Channel implements IUpdateable{
 		this.setMeeting(meeting);
 	}
 	
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
 	public String getName() {
 		return name;
 	}

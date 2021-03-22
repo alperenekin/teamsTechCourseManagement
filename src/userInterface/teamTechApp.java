@@ -51,7 +51,7 @@ public class teamTechApp {
 			createPrivateChannelsFromFile(teamStrings,i,team);
 
 			channelsOfATeam.add(defaultChannel);
-			mediator.addTeam(team,true);
+			mediator.addTeam(team,true,null);
 		}
 	}
 	
