@@ -37,6 +37,16 @@ public class Team {
 		return true;
 	}
 	
+	public boolean removeChannel(Channel newChannel) {
+		ArrayList<Channel> foundChannels = new ArrayList<Channel>();
+		for(Channel channel : channels) {
+			if(newChannel.getName().equals(channel.getName())) {
+				foundChannels.add(channel);
+			}
+		}
+		channels.removeAll(foundChannels);
+		return true;
+	}
 	public ArrayList<Channel> getChannels() {
 		return channels;
 	}
@@ -76,8 +86,6 @@ public class Team {
 		}
 		return null;
 	}
-	public ArrayList<Channel> getChannels(){
-		return channels;
-	}
+
 	
 }

@@ -10,6 +10,7 @@ import userEntities.Student;
 import userEntities.TeachingAsistant;
 import userEntities.User;
 import teamEntities.PrivateChannel;
+import teamEntities.Channel;
 import teamEntities.Meeting;
 
 public class Mediator implements IMediator {
@@ -132,9 +133,10 @@ public class Mediator implements IMediator {
 		//return team.addChannel(publicity,name);
 	}
 	@Override
-	public boolean removeMeetingChannel() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean removeMeetingChannel(Team team, Channel channel) {
+		team.removeChannel(channel);
+		file.replaceLines(team.getId(), null, team.toString(), "teamList"); //add new info to file
+		return true;
 	}
 	@Override
 	public boolean updateMeetingChannelTime(String meetingTime,int channelPlace, int teamPlace) {

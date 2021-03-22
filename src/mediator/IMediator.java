@@ -1,12 +1,13 @@
 package mediator;
 
+import teamEntities.Channel;
 import teamEntities.Team;
 import userEntities.User;
 
 public interface IMediator {
 	public boolean findTeam();
 	public boolean removeTeam(Team team);
-	public boolean removeMeetingChannel();
+	public boolean removeMeetingChannel(Team team, Channel channel);
 	public boolean updateMeetingChannelTime(String meetingTime,int channelPlace,int teamPlace);
 	public boolean updateMeetingChannelParticipants();
 	public boolean addMememberToTeam();
