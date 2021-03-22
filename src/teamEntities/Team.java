@@ -11,13 +11,14 @@ public class Team {
 	private String teamName;
 	private String teamId;
 	private ArrayList<User> owners;
-	private ArrayList<String> members; //hoca Participantlari id olarak tutmus, sanrm id olarak tutmamiz daha makul olur ve unique olmak zorunda.
+	private ArrayList<User> members; //hoca Participantlari id olarak tutmus, sanrm id olarak tutmamiz daha makul olur ve unique olmak zorunda.
 	private ArrayList<Channel> channels;
 
 	public Team (String teamName, String teamId, ArrayList<Channel> channels) {
 		this.teamName = teamName;
 		this.teamId = teamId;
 		this.channels = channels;
+		this.members = new ArrayList<User>();
 		this.owners = new ArrayList<User>();
 	}
 	public String getId() {
@@ -31,10 +32,13 @@ public class Team {
 		this.teamName = teamName;
 	}
 
+	public boolean addMember(User user) {
+		return members.add(user);
+	}
+	
 	public boolean addChannel(Channel channel)
 	{
-		channels.add(channel);
-		return true;
+		return channels.add(channel);
 	}
 	
 	public boolean removeChannel(Channel newChannel) {

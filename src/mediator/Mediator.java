@@ -56,7 +56,8 @@ public class Mediator implements IMediator {
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
 						Team team = findTeamOfUser(teamName);
-						instructor.addTeam(team);
+						instructor.addTeam(team);// we first teams then users so it is best to add team members as users created.
+						team.addMember(instructor);
 					}
 					String newLine = instructor.toString();
 					file.replaceLines(oldLineElement, teamIDs.get(0), newLine, "userList");
@@ -71,6 +72,7 @@ public class Mediator implements IMediator {
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
 						Team team = findTeamOfUser(teamName);
+						team.addMember(teachingAsistant);// we first teams then users so it is best to add team members as users created.
 						teachingAsistant.addTeam(team);
 					}
 					String newLine = teachingAsistant.toString();
@@ -87,7 +89,8 @@ public class Mediator implements IMediator {
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
 						Team team = findTeamOfUser(teamName);
-						student.addTeam(team);
+						team.addMember(student);
+						student.addTeam(team); // we first teams then users so it is best to add team members as users created.
 					}
 					String newLine = student.toString();
 					file.replaceLines(oldLineElement, teamIDs.get(0), newLine, "userList");
