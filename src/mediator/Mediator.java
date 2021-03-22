@@ -83,7 +83,7 @@ public class Mediator implements IMediator {
 				}
 				userList.add(instructor);
 			}
-			else if(userType.toUpperCase().equals("TEACHING ASSISTANT")) { // türkçe karakter olarak upper case yaptý?
+			else if(userType.toUpperCase().equals("TEACHİNG ASSİSTANT")) { // türkçe karakter olarak upper case yaptý?
 				TeachingAsistant teachingAsistant = new TeachingAsistant(username,id,pwd);
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {

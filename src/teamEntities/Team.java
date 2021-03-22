@@ -69,6 +69,7 @@ public class Team {
 	public ArrayList<Channel> getChannels() {
 		return channels;
 	}
+
 	public void setChannels(ArrayList<Channel> channels) {
 		this.channels = channels;
 	}

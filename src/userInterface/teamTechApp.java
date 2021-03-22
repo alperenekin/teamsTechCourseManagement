@@ -41,7 +41,7 @@ public class teamTechApp {
 	private static void createTeamsFromFile(Mediator mediator, ArrayList<ArrayList<String>> teamStrings) {
 		for(int i=1; i< teamStrings.size() ; i++) {
 			ArrayList<Channel> channelsOfATeam = new ArrayList<Channel>();
-			String teamName = teamStrings.get(i).get(0); //þuralar optimize edilebilir.
+			String teamName = teamStrings.get(i).get(0); //ÅŸuralar optimize edilebilir.
 			String teamId = teamStrings.get(i).get(1);
 			String defaultChannelName = teamStrings.get(i).get(2);
 			String meetingTime = teamStrings.get(i).get(3);
@@ -50,7 +50,7 @@ public class teamTechApp {
 			Team team = new Team(teamName,teamId);
 			createPrivateChannelsFromFile(teamStrings,i,team);
 
-			channelsOfATeam.add(defaultChannel);
+			team.addDefaultChannel(defaultChannel);
 			mediator.addTeam(team,true,null);
 		}
 	}
@@ -110,7 +110,7 @@ public class teamTechApp {
 		int count = 0 ;
 		for(int j = 0; j<line.get(i).size(); j++) {
 			if((x+j) <line.get(i).size()) {
-				int len = line.get(i).get(x+j).length(); // TODO 6 lar deðiþmeli
+				int len = line.get(i).get(x+j).length(); // TODO 6 lar deÄŸiÅŸmeli
 				if(line.get(i).get(x+j).startsWith("\"")){
 					if(line.get(i).get(x+j).endsWith("\"")) {
 						participants.add(line.get(i).get(x+j).substring(1,len-1));

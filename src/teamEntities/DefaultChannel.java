@@ -4,7 +4,6 @@ public class DefaultChannel extends Channel {
 
 	public DefaultChannel(String name, Meeting meeting) {
 		super(name, meeting);
-		// TODO Auto-generated constructor stub
 	}
 	public DefaultChannel() {
 		super("Default",new Meeting());

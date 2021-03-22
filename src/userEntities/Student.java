@@ -7,7 +7,7 @@ public class Student extends User {
 	public Student(String userName, int userId, String password)
 	{
 		super(userName,userId,password);
-		String[] nameSurname = userName.split(" "); //student usernamelerin baþýnda boþluk var, array length 3 geliyor.
+		String[] nameSurname = userName.split(" "); //student usernamelerin baÅŸÄ±nda boÅŸluk var, array length 3 geliyor.
 		String name;
 		String secondName;
 		String surname;
