@@ -162,17 +162,17 @@ public class UIUtil {
 				
 			case "3":
 				
+			default:
+				System.out.println("There is no such an action");
+			}
 			//mediator.removeTeam(currentUser.getTeams().get(0)); Böyle siliyoruz
 			
 			
 			/*Team t = new Team("deneme","deneme101");
 			t.addDefaultChannel(new DefaultChannel("defaultChannel",new Meeting("sabah 10")));
-			mediator.addTeam(t, false);*/ //Yeni Team böyle eklendiğinde  dosya direk üstüne yazıyor.
+			mediator.addTeam(t, false);*/ //Yeni Team böyle eklendiğinde  dosya direk üstüne yazıyor.	
 		}
-		
-		
 	}
-	
 	private static void showUserPrivateChannel(ArrayList<PrivateChannel> userPrivateChannels, User currentUser,int count,Mediator mediator) {
 		if(userPrivateChannels.isEmpty()) {
 			System.out.println("You dont have any private channel yet");
