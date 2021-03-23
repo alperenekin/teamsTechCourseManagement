@@ -7,7 +7,6 @@ import userEntities.User;
 
 public class Team {
 	
-	private Mediator mediator;
 	private String teamName;
 	private String teamId;
 	private ArrayList<User> owners;
@@ -30,7 +29,7 @@ public class Team {
 		members.add(author);
 		this.owners = new ArrayList<User>();
 		owners.add(author);
-		
+
 	}
 	public String getId() {
 		return teamId;
@@ -56,6 +55,11 @@ public class Team {
 	{
 		return channels.add(defaultChannel);
 	}
+
+	public ArrayList<User> getOwners() {
+		return owners;
+	}
+
 	public boolean removeChannel(Channel newChannel) {
 		ArrayList<Channel> foundChannels = new ArrayList<Channel>();
 		for(Channel channel : channels) {
@@ -106,6 +110,7 @@ public class Team {
 		}
 		return null;
 	}
+
 	public ArrayList<User> getMembers() {
 		return members;
 	}

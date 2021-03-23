@@ -24,6 +24,7 @@ public class Mediator implements IMediator {
 		teamList = new ArrayList<Team>();
 		userList = new ArrayList<User>();
 	}
+	@Override
 	public boolean addTeam(Team team, boolean isFromFile,User currentUser) { //We also add teams while reading from file which is different from user operation.
 		if(isFromFile) //author.getClass() == "Instructor"   this not how you check. fix it 
 		{
@@ -31,13 +32,13 @@ public class Mediator implements IMediator {
 			return true;
 		}
 		else {
-			if(currentUser instanceof Instructor)// burada user authoratizaiton check yapılmalı
-			{
-			teamList.add(team);
-			((Instructor) currentUser).addOwnedTeams(team);
-			currentUser.addTeam(team);
-			file.addLine(team.toString(),"teamList");
-			return true;}
+			if(currentUser instanceof Instructor) {
+				teamList.add(team);
+				((Instructor) currentUser).addOwnedTeams(team);
+				currentUser.addTeam(team);
+				file.addLine(team.toString(),"teamList");
+			return true;
+			}
 			else {
 				try {
 					throw new UnauthorizedUserOperationException();
@@ -50,9 +51,10 @@ public class Mediator implements IMediator {
 		return true;
 
 	}
-	
+
+	@Override
 	public boolean addUser(String userType, String username, List<String> teamIDs,String userId, String password){
-		if(true) //author.getClass() == "Instructor"   this not how you check. fix it 
+		if(true)
 		{
 			String oldLineElement = username; // this will help us to choose which line we will update.
 			int id;
@@ -71,6 +73,7 @@ public class Mediator implements IMediator {
 						Team team = findTeamOfUser(teamName);
 						if(team != null) {
 							instructor.addTeam(team);// we first teams then users so it is best to add team members as users created.
+							instructor.addOwnedTeams(team);
 							team.addMember(instructor);
 							team.addOwner(instructor);
 						}				
@@ -83,7 +86,7 @@ public class Mediator implements IMediator {
 				}
 				userList.add(instructor);
 			}
-			else if(userType.toUpperCase().equals("TEACHING ASSISTANT")) { // türkçe karakter olarak upper case yaptý?
+			else if(userType.toUpperCase().equals("TEACHİNG ASSİSTANT")) { // türkçe karakter olarak upper case yaptý?
 				TeachingAsistant teachingAsistant = new TeachingAsistant(username,id,pwd);
 				if(teamIDs != null) {
 					for(String teamName : teamIDs) {
@@ -125,6 +128,7 @@ public class Mediator implements IMediator {
 		return true;
 	}
 
+	@Override
 	public void monitorTeamsOfUser(User currentUser){
 		for(int i=0;i< currentUser.getTeams().size();i++) {
 			System.out.print(i+1);
@@ -132,6 +136,7 @@ public class Mediator implements IMediator {
 		}
 	}
 
+	@Override
 	public void monitorTeamDetailsOfUser(int index, User currentUser,ArrayList<PrivateChannel> userPrivateChannels){
 		Team team = currentUser.getTeams().get(index);
 		String teamName = team.getTeamName();
@@ -182,11 +187,7 @@ public class Mediator implements IMediator {
 		}
 		return null;
 	}
-	@Override
-	public boolean findTeam() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 	@Override
 	public boolean removeTeam(Team team) {
 		boolean isSuccess = teamList.remove(team);
@@ -228,7 +229,8 @@ public class Mediator implements IMediator {
 		file.replaceLines(team.getId(), null, team.toString(), "teamList"); //add new info to file
 		return true;
 	}
-	
+
+	@Override
 	public boolean addParticipantToChannel(String  userId, PrivateChannel channel, Team team) {
 		User user = findUserFromId(userId);
 		if(user != null){
@@ -252,6 +254,7 @@ public class Mediator implements IMediator {
 		return result;
 		
 	}
+
 	@Override
 	public boolean addMememberToTeam(String id,User currentUser,Team chosenTeam1) {
 		if(currentUser instanceof Academian)
@@ -270,11 +273,7 @@ public class Mediator implements IMediator {
 		
 		return false;
 	}
-	@Override
-	public boolean removeMemberToTeam() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 	@Override
 	public int numberOfStudents() {
 		int totalStudents = 0;
@@ -312,28 +311,29 @@ public class Mediator implements IMediator {
 		return totalTeachingAssistants;
 	}
 
-	public void promoteUser(Team team,User assistant,User promoter)  {
-		
-		if(promoter instanceof Instructor && assistant instanceof TeachingAsistant)
-		{
-			team.addOwner(assistant);
-			file.replaceLines(team.getId(), null, team.toString(), "teamList");
-			file.replaceLines(assistant.getEmail(), null, assistant.toString(), "userList");
-			
-		}
-		else {
-			try {
-				throw new UnauthorizedUserOperationException();
-			} catch (UnauthorizedUserOperationException e) {
-				System.out.println("You dont have to permission to perform this task");
-				e.printStackTrace();
+	public void promoteUser(Team team,User user,User promoter) throws UnauthorizedUserOperationException {
+		try{
+			if(promoter instanceof Instructor && user instanceof TeachingAsistant)
+			{
+				team.addOwner(user);
 			}
+			else if(promoter instanceof Instructor && user instanceof Student){
+				throw new UnauthorizedUserOperationException("Students can not be team owner!");
+			}
+			else if(promoter instanceof TeachingAsistant && user instanceof TeachingAsistant){
+				if(team.getOwners().contains(promoter)){
+					team.addOwner(user);
+				}else{
+					throw new UnauthorizedUserOperationException("This assistant is not team owner!");
+				}
+			}
+			else if(promoter instanceof TeachingAsistant && user instanceof Student){
+				throw new UnauthorizedUserOperationException("Students can not be team owner!");
+			}
+		}catch(UnauthorizedUserOperationException e){
+			System.out.println(e.getMessage());
 		}
-		/**
-		 * find teaching assistants 
-		 * ask them whitch one is gonna be teamowner
-		 * take the choosen one , update its owned teams, update team
-		 */
+
 	}
 	
 	public void addTeamOwner() { // this is for first time adding of team owners, only instructors can be team owners.
@@ -350,9 +350,7 @@ public class Mediator implements IMediator {
 		}
 	}
 	
-	
 	public User findUser(String userName,String passwd) {
-		
 		User returnUser= null; 
 		for(int i = 0 ; i < userList.size(); i++)
 		{
@@ -362,7 +360,6 @@ public class Mediator implements IMediator {
 			}
 		}
 		return returnUser;
-		
 	}
 	
 	private User findUserFromId(String id) {
@@ -374,5 +371,4 @@ public class Mediator implements IMediator {
 		}
 		return foundUser;
 	}
-
 }

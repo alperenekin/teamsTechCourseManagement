@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import mediator.Mediator;
+import mediator.UnauthorizedUserOperationException;
 import teamEntities.Channel;
 import teamEntities.DefaultChannel;
 import teamEntities.Meeting;
@@ -28,30 +29,45 @@ public class UIUtil {
 		String userName = scanner.nextLine();  
 		System.out.print("Passwd:  ");
 		String passwd = scanner.nextLine();
-		
+		if(userName.equals("") && passwd.equals("") ) {
+			System.out.println("Choose an operation by entering a number");
+			System.out.println("1-numberOfStudents");
+			System.out.println("2-numberOfInstructors");
+			System.out.println("3-numberOfTeachingAssistants");
+			String index = scanner.nextLine();
+			switch (index)
+			{
+				case "1":
+					System.out.println("Number of student:" + mediator.numberOfStudents());
+					break;
+				case "2":
+					System.out.println("Number of instructors:" + mediator.numberOfInstructors());
+					break;
+				case "3":
+					System.out.println("Number of teaching assistants:" + (mediator.numberOfTeachingAssistants()));
+					break;
+			}
+		}
 		User returnUser = mediator.findUser(userName,passwd);
 		if(returnUser == null)
 		{
 			System.out.println("Incorrect user name or password. Try Again.");
 			returnUser = login(mediator);
 		}
-		//if not found call login. 
 		return returnUser;
-		
 	}
 
 	private static void printLoginScreen() {
 		System.out.println("Welcome to the teamsTechApp\n");
+		System.out.println("To bypass loginscreen to see distinct users skip typing username and passwd\n just press enter\n");
 	}
 
-	public static void performCurrentUserTasks(Mediator mediator,User currentUser) {
+	public static void performCurrentUserTasks(Mediator mediator,User currentUser) throws UnauthorizedUserOperationException {
 		System.out.println("What would you like to do? 	\n");
 		printAuthorizedTasks(mediator,currentUser);
-		
-		
 	}
 
-	private static void printAuthorizedTasks(Mediator mediator,User currentUser) {
+	private static void printAuthorizedTasks(Mediator mediator,User currentUser) throws UnauthorizedUserOperationException {
 		if(currentUser instanceof Student) {
 			System.out.println("1- View Your Teams(Enter 1)");
 			Scanner scanner= new Scanner(System.in);    //System.in is a standard input stream  
@@ -133,17 +149,12 @@ public class UIUtil {
 							{
 								System.out.println("There is no participant with id: "+ (String) id);
 							}
-							
 						}
 						break;
 					default:
 						System.out.println("There is no such an action");
-
-						
 				}
-				
 			}
-			
 		}
 		else if (currentUser instanceof Academian) {
 			System.out.println("1- Add a team");
@@ -163,17 +174,18 @@ public class UIUtil {
 				//System.out.println(((Instructor) currentUser).getOwnedTeams());
 				break;
 			case "2":
-				
-				
 				for(int i=0;i< ((Academian) currentUser).getOwnedTeams().size();i++) {
 					System.out.print(i+1);
 					System.out.println("-" + ((Academian) currentUser).getOwnedTeams().get(i).getId());
 				}
-				System.out.print("Choose the team by entering number:");
-				int index = Integer.parseInt(scanner.nextLine())-1;
-				Team team = ((Academian) currentUser).getOwnedTeams().get(index);
-				mediator.removeTeam(team);
-				
+				if(((Academian) currentUser).getOwnedTeams().isEmpty()){
+					System.out.print("You dont have any team");
+				}else{
+					System.out.print("Choose the team by entering number:");
+					int index = Integer.parseInt(scanner.nextLine())-1;
+					Team team = ((Academian) currentUser).getOwnedTeams().get(index);
+					mediator.removeTeam(team);
+				}
 				break;
 			case "3":
 				System.out.println("Choose an operation by entering a number");
@@ -220,6 +232,7 @@ public class UIUtil {
 					System.out.println("Enter unique participant Id:");
 					String id = scanner.nextLine();
 					mediator.addMememberToTeam(id,currentUser,chosenTeam1);
+					break;
 				case "2":
 					mediator.monitorTeamsOfUser(currentUser);
                     int index2 = Integer.parseInt(scanner.nextLine()) - 1;
@@ -229,6 +242,7 @@ public class UIUtil {
                     System.out.print("Enter Meeting time");
                     String newMeetingTime = scanner.nextLine();
                     mediator.addMeetingChannel(team2, newChannelName, newMeetingTime, true, String.valueOf(currentUser.getId()));
+					break;
 				case "3":
 					mediator.monitorTeamsOfUser(currentUser);
                     int index3 = Integer.parseInt(scanner.nextLine()) - 1;
@@ -251,7 +265,8 @@ public class UIUtil {
                         String meetTime = scanner.nextLine();
                         mediator.updateMeetingChannelTime(meetTime,userPrivateChannels.get(channelNumber),team3);
                     }
-				case "4":
+					break;
+                 case "4":
 					mediator.monitorTeamsOfUser(currentUser);
                     int index4 = Integer.parseInt(scanner.nextLine()) - 1;
                     Team team4 = currentUser.getTeams().get(index4);
@@ -271,6 +286,7 @@ public class UIUtil {
                         int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
                         mediator.removeMeetingChannel(team4, userPrivateChannels4.get(channelNumber));
                     }
+					 break;
 				case "5":
 					mediator.monitorTeamsOfUser(currentUser);
                     int index5 = Integer.parseInt(scanner.nextLine()) - 1;
@@ -294,6 +310,7 @@ public class UIUtil {
                         mediator.addParticipantToChannel(id5, userPrivateChannels5.get(channelNumber), team5);
 
                     }
+					break;
 				case "6":
 					mediator.monitorTeamsOfUser(currentUser);
                     int index6 = Integer.parseInt(scanner.nextLine()) - 1;
@@ -314,24 +331,15 @@ public class UIUtil {
                         int channelNumber = Integer.parseInt(scanner.nextLine()) -1;
                         mediator.removeMeetingChannel(team6, userPrivateChannels6.get(channelNumber));
                     }
+					break;
 				default:
 					System.out.println("There is no such a operation");
 				
 				}
-				
 				break;
-
 			default:
 				System.out.println("There is no such an action");
 			}
-			//mediator.removeTeam(currentUser.getTeams().get(0)); Böyle siliyoruz
-			
-			
-			/*Team t = new Team("deneme","deneme101");
-			t.addDefaultChannel(new DefaultChannel("defaultChannel",new Meeting("sabah 10")));
-			mediator.addTeam(t, false);*/ //Yeni Team böyle eklendiğinde  dosya direk üstüne yazıyor.	
 		}
 	}
-
-
 }

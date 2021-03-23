@@ -39,7 +39,6 @@ public class MediatorUtil {
             char rndChar = DATA_FOR_RANDOM_STRING.charAt(rndCharAt);
             sb.append(rndChar);
         }
-        //System.out.println(sb); //delete later
-        return sb.toString();	
+        return sb.toString();
   }
 }

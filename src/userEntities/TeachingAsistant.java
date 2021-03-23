@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import teamEntities.Team;
 
 public class TeachingAsistant extends Academian {
+
 	public TeachingAsistant(String userName,int userId,String password)
 	{
 		super(userName,userId,password);
@@ -28,7 +29,7 @@ public class TeachingAsistant extends Academian {
 		super.addOwnedTeams(team);
 	}
 	public void removeOwnedTeams(Team team){
-		super.ownedTeams.remove(team);
+		super.getOwnedTeams().remove(team);
 	}
 	public ArrayList<Team>  getOwnedTeams() {
 		return super.getOwnedTeams();

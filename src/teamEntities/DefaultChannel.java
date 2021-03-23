@@ -10,9 +10,9 @@ public class DefaultChannel extends Channel {
 	}
 
 	@Override
-	boolean isAuserParticipant(String userId) { //bunu direk herkes görüyor mu yoksa o ders in öðrencileri mi sadece?
-		// TODO Auto-generated method stub
-		return false;
+	boolean isAuserParticipant(String userId) {
+
+		return true;
 	}
 
 

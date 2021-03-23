@@ -9,11 +9,7 @@ public class Instructor extends Academian {
 	public	Instructor(String userName, int userId,String password) {
 		super(userName,userId,password);
 	}
-	
-	public void addTeamOwner(Team team,User user) throws UnauthorizedUserOperationException
-	{
-		this.getMediator().promoteUser(team,user,this);
-	}
+
 	@Override
 	public String toString() { //this method needed to convert an object to file line
 		String type = "Instructor";
@@ -35,7 +31,7 @@ public class Instructor extends Academian {
 		super.addOwnedTeams(team);
 	}
 	public void removeOwnedTeams(Team team){
-		super.ownedTeams.remove(team);
+		super.getOwnedTeams().remove(team);
 	}
 	public ArrayList<Team>  getOwnedTeams() {
 		return super.getOwnedTeams();

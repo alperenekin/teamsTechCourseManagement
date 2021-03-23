@@ -1,9 +1,5 @@
 package teamEntities;
 
-import java.util.ArrayList;
-
-import userEntities.User;
-
 public abstract class Channel {
 	private String name;
 	private Meeting meeting;

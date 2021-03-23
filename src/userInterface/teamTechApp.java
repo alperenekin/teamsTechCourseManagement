@@ -6,6 +6,7 @@ import java.util.List;
 
 import fileOperations.FileIO;
 import mediator.Mediator;
+import mediator.UnauthorizedUserOperationException;
 import teamEntities.Channel;
 import teamEntities.DefaultChannel;
 import teamEntities.Meeting;
@@ -15,12 +16,8 @@ import userEntities.Instructor;
 import userEntities.User;
 
 public class teamTechApp {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnauthorizedUserOperationException {
 		Mediator mediator = new Mediator();
-		/*Instructor i = new Instructor("TUGKAN TUGLULAR",11,"abc");
-		i.addTeam(new Team("AAA","CENG211",null));
-		i.addTeam(new Team("BBB","CENG431",null));
-		System.out.println(i.toString());*/
 		initializeApp(mediator);
 		User currentUser  = UIUtil.loginScreen(mediator);
 		while(true) {

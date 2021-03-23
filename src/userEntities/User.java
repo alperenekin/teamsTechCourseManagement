@@ -1,15 +1,12 @@
 package userEntities;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import mediator.IIdentifiable;
 import mediator.Mediator;
 import teamEntities.Team;
 
 public abstract class User{
 	
-	private Mediator mediator;
 	private String name;
 	private int id;
 	private String email; //also used as login username
@@ -36,9 +33,6 @@ public abstract class User{
 
 	public int getId() {
 		return id;
-	}
-	public Mediator getMediator() {
-		return mediator;
 	}
 	public ArrayList<Team> getTeams() {
 		return teams;
